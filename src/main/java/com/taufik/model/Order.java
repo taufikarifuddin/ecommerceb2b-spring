@@ -1,0 +1,94 @@
+package com.taufik.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table( name = "order" )
+public class Order {
+	
+	@Id
+	@GeneratedValue
+	@Column( name = "member_order_id" )
+	int id;
+	
+	@Column( name = "membermember_id" )
+	int memberId;
+	
+	@Column( name = "order_statusorder_status_id" )
+	int statusId;
+	
+	@Column( name = "order_date_created" )
+	String orderCreated;
+	
+	@Column( name = "member_member_name" )
+	String memberName; 
+	
+	@Column( name = "payment_methodpayment_method_id" )
+	String paymentId;
+
+	public Order(int id, int memberId, int statusId, String orderCreated, String memberName, String paymentId) {
+		super();
+		this.id = id;
+		this.memberId = memberId;
+		this.statusId = statusId;
+		this.orderCreated = orderCreated;
+		this.memberName = memberName;
+		this.paymentId = paymentId;
+	}
+	
+	public Order() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
+	public int getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
+	}
+
+	public String getOrderCreated() {
+		return orderCreated;
+	}
+
+	public void setOrderCreated(String orderCreated) {
+		this.orderCreated = orderCreated;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public String getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(String paymentId) {
+		this.paymentId = paymentId;
+	}
+}
