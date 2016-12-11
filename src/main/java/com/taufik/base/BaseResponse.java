@@ -59,6 +59,10 @@ public class BaseResponse {
 	public void setDataResponse(Object message){
 		baseResponse.put(Constant.DATA_RESPONS_PARAMS, message);
 	}
+	
+	public void setUrlResponse(String url){
+		baseResponse.put(Constant.URL, url);
+	}
 
 	
 	public void putOtherResponse(String key, Object value){

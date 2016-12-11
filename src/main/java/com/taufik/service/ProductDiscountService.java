@@ -1,12 +1,12 @@
 package com.taufik.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.taufik.base.BaseService;
 import com.taufik.model.ProductDiscount;
+import com.taufik.repository.ProductDiscountRepository;
 
 @Service
-public class ProductDiscountService extends BaseService<ProductDiscount, JpaRepository<ProductDiscount,Integer>>{
+public class ProductDiscountService extends BaseService<ProductDiscount, ProductDiscountRepository>{
 
 }

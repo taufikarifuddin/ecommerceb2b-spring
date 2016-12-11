@@ -20,11 +20,6 @@ public class BaseService<T,K extends JpaRepository<T, Integer>>{
 	}
 
 	
-	public BaseResponse edit(T data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public BaseResponse remove(int id) {
 		BaseResponse response = this.setResponse();
 		try{

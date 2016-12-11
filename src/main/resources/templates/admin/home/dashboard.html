@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="/admin/resource/fragment/header::headerFragment">
+	<title id="title">Dashboard</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">            
+		
+		<header class="main-header" th:include="/admin/resource/fragment/element::headerMainFragment"></header>
+		<aside class="main-sidebar" th:include="/admin/resource/fragment/element::sideBarMainFragment"></aside>
+        <div style="z-index:10;" class="wrapper" />
+        <!-- Left side column. contains the logo and sidebar -->
+     
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                        <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                            <i class="fa fa-edit"></i>
+
+                            <h3 class="box-title">Dashboard</h3>
+                            </div>
+                            <div class="box-body pad table-responsive">
+                                Welcome to dashboard
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer" th:include="/admin/resource/fragment/element::footerMainFragment"></footer>
+</body>
+</html>

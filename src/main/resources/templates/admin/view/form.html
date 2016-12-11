@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org/">
+	<head>
+	</head>
+	<body>		
+		<div th:fragment="productCategory">
+			<div class="form-group">
+				<label>Nama Kategori</label>
+				<label class="label label-danger">{{ error.name }}</label>
+				<input type="hidden" class="form-control" ng-model="form.id" />				
+				<input type="text" class="form-control" ng-model="form.name" />
+			</div>
+			<div class="form-group">
+				<label>Icon Kategori ( <i class="fa fa-{{form.icon}}"></i> )</label>
+				<label class="label label-danger">{{ error.icon }}</label>				
+				<input type="text" class="form-control" ng-model="form.icon" />
+			</div>
+			<div class="form-group">
+				<label>Deskripsi</label>
+				<label class="label label-danger">{{ error.desc }}</label>								
+				<textarea class="form-control" ng-model="form.desc"></textarea>
+			</div>
+			<div class="form-group">
+				<input type="submit" class="btn btn-flat btn-success" value="Simpan" /> 
+				<input type="reset" class="btn btn-flat btn-danger" value="Reset" />				
+			</div>			
+		</div>		
+	</body>
+</html>

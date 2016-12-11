@@ -22,7 +22,7 @@ public class Member {
 	String name;
 	
 	@Column( name = "member_email_address" )
-	String address;
+	String email;
 	
 	@Column( name = "member_contact" )
 	String contact;
@@ -48,13 +48,13 @@ public class Member {
 	@Column( name = "member_rolemember_role_id" )
 	int roleId;
 
-	public Member(int id, int genderID, String name, String address, String contact, String contact2, String password,
+	public Member(int id, int genderID, String name, String email, String contact, String contact2, String password,
 			boolean isActive, String lastLogin, String dateCreated, String lastModificationDate, int roleId) {
 		super();
 		this.id = id;
 		this.genderID = genderID;
 		this.name = name;
-		this.address = address;
+		this.email = email;
 		this.contact = contact;
 		this.contact2 = contact2;
 		this.password = password;
@@ -101,13 +101,13 @@ public class Member {
 	}
 
 
-	public String getAddress() {
-		return address;
+	public String getEmail() {
+		return email;
 	}
 
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 

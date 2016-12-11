@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table( name = "product_category" )
@@ -12,13 +14,15 @@ public class ProductCategory {
 	
 	@Id
 	@GeneratedValue
-	@Column( name = "product_category" )
+	@Column( name = "product_category_id" )
 	int id;
 	
 	@Column( name = "product_category_name" )
+	@NotNull( message = "Nama Kategori tidak boleh kosong" )
 	String name;
 	
 	@Column( name = "product_category_icon" )
+	@NotNull( message = "Icon tidak boeh kosong" )
 	String icon;
 	
 	@Column( name = "product_category_desc" )

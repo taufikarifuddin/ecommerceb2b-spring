@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>	
+	</head>
+	<body>		
+		<div th:fragment="index">
+           	<a href="/admin/{{link}}/add" class="btn btn-flat btn-primary" id="add-btn">
+         		<i class="fa fa-plus"></i> Tambah Data
+         	</a>
+		
+			<table id="table-content" class="text-center table table-stripped" ng-init="link='productCategory';action='getAll'">
+				<thead>
+					<th>Nama Kategori</th>
+					<th>Icon Kategori</th>					
+					<th>Deskripsi</th>										
+					<th>Aksi</th>										
+				</thead>
+				<tbody>
+					<tr repeat-end="onEndRepeat()" ng-repeat="detail in data">
+						<td>{{ detail.name }}</td>
+						<td>{{ detail.icon }}</td>
+						<td>{{ detail.desc }}</td>
+						<td>
+							<a href="/admin/productCategory/edit/{{detail.id}}" class="btn btn-flat btn-warning">
+								<i class="fa fa-pencil"></i>
+							</a>&nbsp;
+							<a href="/admin/productCategory/remove/{{detail.id}}" class="btn btn-flat btn-danger">
+								<i class="fa fa-remove"></i>
+							</a>							
+						</td>						
+					</tr>
+				</tbody>
+				<tfoot>
+					<th>Nama Kategori</th>
+					<th>Icon Kategori</th>										
+					<th>Deskripsi</th>															
+					<th>Aksi</th>															
+				</tfoot>
+			</table>
+		</div>
+		
+		<div th:fragment="edit">
+		
+			<form role="form" ng-submit="submit(form)" th:inline="text"
+			th:attr="ng-init='link=\'productCategory\';action=\'edit\';id=\''+${id}+'\''"
+			>
+				<div th:include="/admin/view/form::${controllerName}"></div>			
+			</form>
+		</div>
+
+		<div th:fragment="delete">
+			coba lagi gan delete
+		</div>		
+		
+		
+		<div th:fragment="add">
+			<form role="form" ng-submit="submit(form)"
+			ng-init="link='productCategory';action='add'">
+				<div th:include="/admin/view/form::${controllerName}"></div>			
+			</form>
+		</div>	
+		
+	</body>
+</html>
