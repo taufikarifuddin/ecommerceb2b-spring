@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taufik.base.BaseResponse;
@@ -21,7 +22,7 @@ public class ProductCategoryRestController implements BaseRestControllerInterfac
 	ProductCategoryService service;
 	
 	@Override
-	@RequestMapping( value = Constant.API_PREFIX+"productCategory"+Constant.UPDATE_POSTFIX )
+	@RequestMapping( value = Constant.API_PREFIX+"productCategory"+Constant.UPDATE_POSTFIX,method = RequestMethod.POST )
 	public BaseResponse update(@RequestBody @Valid ProductCategory data, 
 			BindingResult bindingResult) {
 		
@@ -33,9 +34,9 @@ public class ProductCategoryRestController implements BaseRestControllerInterfac
 	}
 
 	@Override
-	public BaseResponse delete(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	@RequestMapping( value = Constant.API_PREFIX+"productCategory"+Constant.REMOVE_POSTFIX,method = RequestMethod.POST)		
+	public BaseResponse delete( int id) {
+		return service.remove(id);
 	}
 
 	@Override
@@ -51,12 +52,4 @@ public class ProductCategoryRestController implements BaseRestControllerInterfac
 		return service.getAll();
 	}
 
-	@Override
-	public BaseResponse doUpdate(ProductCategory data, BindingResult bindingResult) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	
 }

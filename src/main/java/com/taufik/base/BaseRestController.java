@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BaseRestController<T,K extends BaseService<T, JpaRepository<T,Integer>>> 
 	implements BaseRestControllerInterface<T>{	
 	
-	private String controllerName;
 	private K repo;
 	
 	@Override
@@ -33,18 +32,6 @@ public class BaseRestController<T,K extends BaseService<T, JpaRepository<T,Integ
 	@RequestMapping( "/api/productCategory/getAll" )
 	public BaseResponse getAll() {
 		return repo.getAll();
-	}
-
-	@Override
-	public BaseResponse doUpdate(T data, BindingResult bindingResult) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	public void setControllerName(String controllerName) {
-		this.controllerName = controllerName;
-		System.out.println("called "+this.controllerName);
 	}
 	
 	@Autowired

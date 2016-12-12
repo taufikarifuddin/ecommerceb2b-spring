@@ -47,8 +47,35 @@
 			</form>
 		</div>
 
-		<div th:fragment="delete">
-			coba lagi gan delete
+		<div th:fragment="remove">
+			<table class="table table-bordered"
+				th:attr="ng-init='link=\'productCategory\';action=\'remove\';id=\''+${id}+'\''"			
+			>
+				<tr>
+					<td>Nama Kategori</td>
+					<td>:</td>
+					<td>{{ form.name }}</td>					
+				</tr>
+				<tr>
+					<td>Icon</td>
+					<td>:</td>
+					<td>
+						<i class="fa fa-{{form.icon}}"></i>
+					</td>					
+				</tr>
+				<tr>
+					<td>Deskripsi</td>
+					<td>:</td>
+					<td>{{ form.desc }}</td>					
+				</tr>
+				<tr>
+					<td colspan="3">
+						<button class="btn btn-flat btn-danger" ng-click="remove()">
+							Hapus
+						</button>
+					</td>
+				</tr>
+			</table>
 		</div>		
 		
 		

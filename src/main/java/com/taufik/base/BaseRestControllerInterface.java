@@ -7,5 +7,4 @@ public interface BaseRestControllerInterface<T> {
 	public BaseResponse delete(int id);
 	public BaseResponse get(int id);	
 	public BaseResponse getAll();	
-	public BaseResponse doUpdate(T data,BindingResult bindingResult);
 }

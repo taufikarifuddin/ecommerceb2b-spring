@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import com.taufik.customvalidator.PriceNumber;
 
 @Entity
 @Table( name = "product" )
@@ -14,32 +17,38 @@ public class Product {
 	@GeneratedValue
 	@Column( name = "product_id" )
 	int id;
-	
+		
 	@Column( name = "product_name" )
+	@NotNull( message = "Nama tidak boleh kosong" )
 	String name;
 	
-	@Column( name = "product_date_added" )
+	@Column( name = "product_date_added" )	
 	String dateAdded;
 	
 	@Column( name = "product_last_modified" )
 	String lastModified;
 	
 	@Column( name = "product_desc" )
+	@NotNull( message = "Deskripsi Produk tidak boleh kosong" )
 	String desc;
 		
 	@Column( name = "product_viewed" )
 	int viewedCounter;
 	
 	@Column( name = "product_default_price" )
+	@NotNull( message = "Harga tidak boleh kosong" )
+	@PriceNumber( message = "Harga harus berupa angka" )
 	int price;
 	
 	@Column( name = "is_visible" )
 	boolean isVisible;
 	
 	@Column( name = "product_categoryproduct_category_id" )
+	@NotNull( message = "Kategori tidak boleh kosong" )	
 	int categoryId;
 	
 	@Column( name = "product_code" )
+	@NotNull( message = "Kode Barang tidak boleh kosong" )
 	String code;
 	
 	public Product() {

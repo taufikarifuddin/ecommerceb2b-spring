@@ -44,9 +44,9 @@ public class ProductCategoryController implements BaseControllerInterface<Produc
 
 	@Override
 	@RequestMapping( value = "/admin/productCategory/remove/{id}" )		
-	public String delete(int id,Model model) {
+	public String delete(@PathVariable(name = "id") int id,Model model) {
 		System.out.println("IDnya gan : "+id);		
-		PageAttribute.setAttribut(model, controllerName, Constant.EDIT_ACTION, "Hapus Kategori Produk",id);		
+		PageAttribute.setAttribut(model, controllerName, Constant.REMOVE_ACTION, "Hapus Kategori Produk",id);		
 		return "admin/index";
 	}
 	

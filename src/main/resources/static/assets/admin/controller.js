@@ -43,15 +43,25 @@ app.controller('PageController',function(DataAttributFactory,RestFactory,$scope,
 				break;
 			case 'edit' : 
 				$scope.isShowLoader = false;
+			case 'remove' :
+				$scope.isShowLoader = false;
 				RestFactory.rest($scope.link).getDetail({ id : $scope.id },{},function(response){
-					$scope.form = response.baseResponse.data;
-					console.log($scope.form);
-				})
-				break;
-			case 'remove' : 
+					$scope.form = response.baseResponse.data;					
+				})				
 				break;
 		}		
 	})
+	
+	$scope.remove = function(){
+		
+		if( window.confirm( "Apakah anda yakin ? " ) ){
+			RestFactory.rest($scope.link).remove({id : $scope.id},{},function(response){						
+				if( response.baseResponse.error === false ){
+					window.location.href="/admin/"+$scope.link;
+				}
+			})
+		}
+	}
 	
 	$scope.submit = function(data){
 		
