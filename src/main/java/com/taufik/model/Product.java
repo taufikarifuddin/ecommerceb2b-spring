@@ -7,7 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.taufik.customvalidator.PriceNumber;
+import com.taufik.customvalidator.NotZeroValue;
+
 
 @Entity
 @Table( name = "product" )
@@ -36,15 +37,14 @@ public class Product {
 	int viewedCounter;
 	
 	@Column( name = "product_default_price" )
-	@NotNull( message = "Harga tidak boleh kosong" )
-	@PriceNumber( message = "Harga harus berupa angka" )
+	@NotZeroValue( message = "Harga tidak boleh kosong" )
 	int price;
 	
 	@Column( name = "is_visible" )
 	boolean isVisible;
 	
 	@Column( name = "product_categoryproduct_category_id" )
-	@NotNull( message = "Kategori tidak boleh kosong" )	
+	@NotZeroValue( message = "Kategori tidak boleh kosong" )	
 	int categoryId;
 	
 	@Column( name = "product_code" )

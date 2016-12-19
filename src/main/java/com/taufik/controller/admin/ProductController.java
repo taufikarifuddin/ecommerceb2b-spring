@@ -49,4 +49,6 @@ public class ProductController implements BaseControllerInterface<Product>{
 		return "admin/index";
 	}
 	
+
+	
 }

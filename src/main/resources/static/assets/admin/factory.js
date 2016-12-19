@@ -1,5 +1,28 @@
 var app = angular.module('app',['ngResource']);
 
+app.config(function($httpProvider){
+	$httpProvider.interceptors.push('responseObserver');
+})
+
+app.factory('responseObserver', function responseObserver($q, $window) {
+    return {
+        'responseError': function(errorResponse) {
+            switch (errorResponse.status) {
+            case 403:
+                $window.location = '/error/forbiden';
+                break;
+            case 404:
+                $window.location = '/error/notfound';            	
+            case 400:;
+            case 500:
+                $window.location = '/error/server';
+                break;
+            }
+            return $q.reject(errorResponse);
+        }
+    };
+});
+
 app.factory('RestFactory',function($resource){
 
     var service = {};
@@ -99,6 +122,44 @@ app.factory('LoginFactory',function($resource){
     service.login = getRestResponse;
 
     return service;
+
+})
+
+app.factory('ErrorHandlerFactory',function(){
+	
+    var service = {};
+	
+	
+	var errorData = function(data){
+		var error = {};
+		for( var i = 0; i < data.baseResponse.data.length; i++ ){
+			error[data.baseResponse.data[i].field] = data.baseResponse.data[i].defaultMessage;
+		}		
+		return error;
+	}
+	
+	var isSuccess = function(data,fn){
+		var dataResponse = data.baseResponse;
+		if(dataResponse.error === false ){			
+			if( typeof dataResponse.data != 'undefined' ){
+				fn(true,dataResponse.data);				
+			}else{
+				fn(true);
+			}
+			
+		}else{
+			if( typeof dataResponse.data != 'undefined'){
+				fn(false,errorData(data));
+			}else{
+				fn(false);				
+			}
+		}
+	}
+	
+	service.getErrorData = errorData;
+	service.responseHandler = isSuccess;
+	
+	return service;
 
 })
 

@@ -24,5 +24,38 @@
 				<input type="reset" class="btn btn-flat btn-danger" value="Reset" />				
 			</div>			
 		</div>		
+		<div th:fragment="product">
+			<div class="form-group">
+				<label>Nama Produk</label>
+				<label class="label label-danger">{{ error.name }}</label>
+				<input type="hidden" class="form-control" ng-model="form.id" />				
+				<input type="text" class="form-control" ng-model="form.name" />
+			</div>
+			<div class="form-group">
+				<label>Kode Produk</label>
+				<label class="label label-danger">{{ error.code }}</label>
+				<input ng-keydown="checkCode(form.code)" type="text" class="form-control" ng-model="form.code" />
+			</div>
+			<div class="form-group">
+				<label>Kategori Produk</label>
+				<select class="form-control" ng-model="form.categoryId"
+					ng-options="productCategory.id as productCategory.name for productCategory in productCategory track by productCategory.id"
+				></select>
+			</div>
+			<div class="form-group">
+				<label>Harga</label>
+				<label class="label label-danger">{{ error.price }}</label>
+				<input type="text" class="form-control" ng-model="form.price" />
+			</div>			
+			<div class="form-group">
+				<label>Deskripsi</label>
+				<label class="label label-danger">{{ error.desc }}</label>
+				<textarea class="form-control" ng-model="form.desc"></textarea>
+			</div>
+			<div class="form-group">
+				<input type="submit" ng-init="isValidCode='true'" ng-disabled="!isValidCode" class="btn btn-flat btn-success" value="Simpan" /> 
+				<input type="reset" class="btn btn-flat btn-danger" value="Reset" />				
+			</div>
+		</div>
 	</body>
 </html>

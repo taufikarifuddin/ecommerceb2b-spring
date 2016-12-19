@@ -6,14 +6,19 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
+import javax.validation.Payload;
 
 import java.lang.annotation.RetentionPolicy;
 
 
 @Documented
-@Constraint( validatedBy = PriceNumberValidator.class )
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PriceNumber {
+@Constraint( validatedBy = NotZeroValueValidator.class )
+public @interface NotZeroValue {
 	String message() default "is not valid number";
+	Class<?>[] groups() default {};
+	Class<? extends Payload>[] payload() default {};
+
 }
+

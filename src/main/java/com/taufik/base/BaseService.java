@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public class BaseService<T,K extends JpaRepository<T, Integer>>{	
 
-	K repo;
+	protected K repo;
 	
 	public BaseResponse save(T data) {
 		BaseResponse response = this.setResponse();

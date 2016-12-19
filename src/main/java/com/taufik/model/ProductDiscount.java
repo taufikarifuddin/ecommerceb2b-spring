@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import com.taufik.customvalidator.NotZeroValue;
 
 @Entity
 @Table( name = "product_discount" )
@@ -16,12 +17,14 @@ public class ProductDiscount {
 	int id;
 	
 	@Column( name = "product_discount_tracehold" )
+	@NotZeroValue( message = "Batas Pembelian tidak boleh kosong" )		
 	int tracehold;
 	
 	@Column( name = "product_discount_price" )
+	@NotZeroValue( message = "Discount tidak boleh kosong" )	
 	int discount;
 	
-	@Column( name = "productproduct_id" )
+	@Column( name = "productproduct_id" )	
 	int productId;
 	
 	public ProductDiscount() {

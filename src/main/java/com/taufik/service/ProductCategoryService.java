@@ -8,5 +8,5 @@ import com.taufik.repository.ProductCategoryRepository;
 
 @Service
 public class ProductCategoryService extends BaseService<ProductCategory, ProductCategoryRepository>{
-
+	
 }

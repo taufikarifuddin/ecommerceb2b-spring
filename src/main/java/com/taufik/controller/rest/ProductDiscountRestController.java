@@ -7,29 +7,32 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taufik.base.BaseResponse;
 import com.taufik.base.BaseRestControllerInterface;
-import com.taufik.model.Product;
+import com.taufik.model.ProductDiscount;
 import com.taufik.other.Constant;
-import com.taufik.service.ProductService;
+import com.taufik.service.ProductDiscountService;
 
 @RestController
-public class ProductRestController implements BaseRestControllerInterface<Product>{
+public class ProductDiscountRestController implements BaseRestControllerInterface<ProductDiscount>{
 
 	@Autowired
-	private ProductService service;
-	private final String controllerName = "product";
+	private ProductDiscountService service;
+	private final String controllerName = "productDiscount";
 	
 	@Override
 	@RequestMapping( value = Constant.API_PREFIX+controllerName+Constant.UPDATE_POSTFIX,method = RequestMethod.POST )	
-	public BaseResponse update(@RequestBody @Valid Product data, BindingResult bindingResult) {
+	public BaseResponse update(@RequestBody @Valid ProductDiscount data, BindingResult bindingResult) {
 		// TODO Auto-generated method stub
-		if( bindingResult.hasErrors() ){
+		if( bindingResult.hasErrors() ){	
 			return new BaseResponse(bindingResult.getAllErrors(),true);
 		}
-		return service.save(data);
+		BaseResponse response = service.save(data);
+		response.setDataResponse(data);
+		return response;
 	}
 
 	@Override
@@ -47,16 +50,15 @@ public class ProductRestController implements BaseRestControllerInterface<Produc
 	}
 
 	@Override
-	@RequestMapping( value = Constant.API_PREFIX+controllerName+Constant.GET_ALL_POSTFIX)				
 	public BaseResponse getAll() {
 		// TODO Auto-generated method stub
 		return service.getAll();
 	}
-	
 
-	@RequestMapping( value = Constant.API_PREFIX+controllerName+"/isExistCode")	
-	public BaseResponse issExistCode(String code){
-		return service.getCode(code);
+	@RequestMapping(value = Constant.API_PREFIX+controllerName+Constant.GET_ALL_POSTFIX)				
+	public BaseResponse getAllByIdProduct(@RequestParam( defaultValue = "0",required = true ) int id) {
+		// TODO Auto-generated method stub
+		return service.getByIdProduct(id);
 	}
 
 }
