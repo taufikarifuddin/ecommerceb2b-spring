@@ -41,7 +41,7 @@ public class Product {
 	int price;
 	
 	@Column( name = "is_visible" )
-	boolean isVisible;
+	int isVisible;
 	
 	@Column( name = "product_categoryproduct_category_id" )
 	@NotZeroValue( message = "Kategori tidak boleh kosong" )	
@@ -57,7 +57,7 @@ public class Product {
 	
 
 	public Product(int id, String name, String dateAdded, String lastModified, String desc, int viewedCounter,
-			int price, boolean isVisible, int categoryId, String code) {
+			int price, int isVisible, int categoryId, String code) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -71,6 +71,14 @@ public class Product {
 		this.code = code;
 	}
 
+	public void setIsVisible(int isVisible) {
+		this.isVisible = isVisible;
+	}
+	
+	public int getIsVisible() {
+		return isVisible;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -127,13 +135,6 @@ public class Product {
 		this.price = price;
 	}
 
-	public boolean isVisible() {
-		return isVisible;
-	}
-
-	public void setVisible(boolean isVisible) {
-		this.isVisible = isVisible;
-	}
 
 	public int getCategoryId() {
 		return categoryId;

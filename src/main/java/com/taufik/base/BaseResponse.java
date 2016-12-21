@@ -69,6 +69,11 @@ public class BaseResponse {
 		this.baseResponse.put(key, value);
 	}
 	
+	public boolean getErrorStatus() {
+		return (boolean) baseResponse.get(Constant.ERROR_RESPONS_PARAMS);
+	}
+
+	
 	public HashMap<String, Object> getBaseResponse() {
 		return baseResponse;
 	}

@@ -70,7 +70,6 @@ app.controller('PageController',function(ErrorHandlerFactory,DataAttributFactory
 	}
 	
 	$scope.submit = function(data){
-		console.log(data);
 		DataAttributFactory.remove($scope.error);
 		$scope.isShowLoader = true;
 		if( typeof data === 'undefined' ){
@@ -159,7 +158,7 @@ app.controller('DiscountController',function(ErrorHandlerFactory,DataAttributFac
 	})
 	
 	$scope.remove = function(data){		
-		console.log(data);		
+		
 		if( window.confirm("Apakah anda yakin ?") ){
 			RestFactory.rest("productDiscount").remove({ id : data.id},{},function(response){
 				ErrorHandlerFactory.responseHandler(response,function(isSuccess,data){
@@ -174,6 +173,7 @@ app.controller('DiscountController',function(ErrorHandlerFactory,DataAttributFac
 			})
 		}
 	}
+	
 	
 	$scope.submit = function(data){
 		if( typeof data == 'undefined' )
@@ -194,17 +194,80 @@ app.controller('DiscountController',function(ErrorHandlerFactory,DataAttributFac
 	}	
 })
 
-
-
-
-/* directive */
-app.directive('repeatEnd',function(){
-	return {
-		 restrict: 'A',
-		 link: function ($scope, element, attr) {
-            if ($scope.$last === true) {
-            	$scope.$eval(attr.repeatEnd);
-            }
-        }		 
+app.controller('GaleryController',function(ErrorHandlerFactory,DataAttributFactory,RestFactory,$scope,$http){
+	
+	$scope.allowExt = ['png','jpg','bmp','gif','jpeg'];
+	$scope.isValidExt = false;
+	
+	$scope.$watch('$parent.id',function(newVal,oldVal){
+		RestFactory.rest('productImage').getAll({ id : newVal },{},function(response){
+			$scope.listImage = response.baseResponse.data;
+			console.log($scope.listImage);
+		})
+	})
+	
+	$scope.$watch('productgalery',function(newValue,oldValue){				
+		if( typeof newValue != "undefined" ){			
+//			console.log(newValue);
+			$scope.productGalery = newValue;
+			var dataImage = newValue.type.split("/");
+			if( dataImage.length == 2 && $scope.allowExt.indexOf(dataImage[1]) > -1){
+				$scope.isValidExt = true;
+			}else{								
+				$scope.isValidExt = false;
+			}
+		}
+	})
+	
+	$scope.remove = function(data){
+		if( window.confirm('Apakah anda yakin ? ') ){
+			
+			RestFactory.rest('productImage').remove({ id : data.id },{},function(response){
+				ErrorHandlerFactory.responseHandler(response,function(isSuccess){
+					if( isSuccess ){
+						$scope.listImage.splice($scope.listImage.indexOf(data),1);
+					}else{
+						alert('Hapus data gagal');
+					}
+				})
+			})
+			
+		}
 	}
+	
+	$scope.submit = function(data){
+		if( typeof data == 'undefined' )
+			data = {};
+		data['image'] = $scope.productgalery.name;
+		data.productId = $scope.$parent.id;
+		
+		var formData = new FormData();
+		formData.append('file',$scope.productgalery);
+		
+		$http.post("/api/productImage/upload",formData,{
+			transformRequest: angular.identity,
+            headers: {
+            	'Content-Type': undefined,            	
+            	'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
+            }
+		}).success(function(response){			
+		
+			if( response.baseResponse.error === false){		
+				data['image'] = response.baseResponse.message;				
+				RestFactory.rest('productImage').update({},data,function(response){							
+					ErrorHandlerFactory.responseHandler(response,function(isSuccess,dataVal){
+						if( isSuccess ){
+							$scope.listImage.push(dataVal);
+						}else{
+							$scope.errorimage = ErrorHandlerFactory.getErrorData(response);
+						}
+					})
+				})
+			}
+			
+		})
+		
+	}
+	
 })
+

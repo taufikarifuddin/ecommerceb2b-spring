@@ -1,7 +1,7 @@
 var app = angular.module('app',['ngResource']);
 
 app.config(function($httpProvider){
-	$httpProvider.interceptors.push('responseObserver');
+//	$httpProvider.interceptors.push('responseObserver');
 })
 
 app.factory('responseObserver', function responseObserver($q, $window) {
