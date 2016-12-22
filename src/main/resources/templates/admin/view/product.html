@@ -19,7 +19,7 @@
 						<td>{{ detail.name }}</td>
 						<td>{{ detail.price }}</td>
 						<td>
-							<input type="checkbox"  ng-checked="detail.isVisible" ng-model="checkbox" />
+							{{ detail.isVisible ? "Tampil" : "Tidak tampil" }}							
 						</td>
 						<td>
 							<a href="/admin/product/edit/{{detail.id}}" class="btn btn-flat btn-warning">
@@ -133,7 +133,7 @@
 							<label class="label label-danger" ng-if="!isValidExt">
 								Gambar harus memiliki ekstensi {{ allowExt.join(',') }}
 							</label>
-							<input type="file" upload-file="" file-model="productgalery" />
+							<input type="file" class="form-control" upload-file="" file-model="productgalery" />
 						</div>	              	
 						<div class="form-group">
 							<label>Urutan Galeri</label>

@@ -34,6 +34,7 @@ app.controller('PageController',function(ErrorHandlerFactory,DataAttributFactory
 				RestFactory.rest($scope.link).getAll({},{},function(response){
 					if( response.baseResponse.data.length > 0 ){
 						$scope.data = response.baseResponse.data;						
+						console.log($scope.data);
 					}else{
 						$scope.isShowLoader = false;
 					}
@@ -108,6 +109,7 @@ app.controller('ProductFormController',function(RestFactory,$scope,$resource){
 	})
 	
 	$scope.submit = function(data){
+		console.log(data);
 		$scope.$parent.link = $scope.link;
 		$scope.$parent.submit(data);
 	}
@@ -241,6 +243,23 @@ app.controller('GaleryController',function(ErrorHandlerFactory,DataAttributFacto
 		data['image'] = $scope.productgalery.name;
 		data.productId = $scope.$parent.id;
 		
+		RestFactory.uploadFile($scope.productgalery,function(isSuccess,name,message){
+			if( isSuccess ){
+				data['image'] = name;				
+				RestFactory.rest('productImage').update({},data,function(response){							
+					ErrorHandlerFactory.responseHandler(response,function(isSuccess,dataVal){
+						if( isSuccess ){
+							$scope.listImage.push(dataVal);
+						}else{
+							$scope.errorimage = ErrorHandlerFactory.getErrorData(response);
+						}
+					})
+				})				
+			}else{
+				alert(message);
+			}
+		})
+		/*
 		var formData = new FormData();
 		formData.append('file',$scope.productgalery);
 		
@@ -265,9 +284,58 @@ app.controller('GaleryController',function(ErrorHandlerFactory,DataAttributFacto
 				})
 			}
 			
-		})
+		})*/
 		
 	}
 	
 })
 
+app.controller('BannerController',function($scope,RestFactory){
+	$scope.allowExt = ['png','jpg','bmp','gif','jpeg'];
+	$scope.isValidExt = false;
+	
+
+	$scope.$watch('action',function(newVal,oldVal){
+		$scope.$parent.link = $scope.link;
+		$scope.$parent.action = $scope.action;
+	})
+	
+	$scope.$watch('bannerImage',function(newVal,oldVal){
+		$scope.bannerImage = newVal;
+	});
+	
+	$scope.submit = function(data){
+		
+		RestFactory.uploadFile($scope.bannerImage,function(isSuccess,name,message){
+			if( isSuccess){				
+				if( typeof $scope.form == 'undefined' )
+					$scope.form = {};
+				$scope.form['image'] = name;
+				$scope.$parent.link = $scope.link;
+				$scope.$parent.submit(data);				
+			}else{
+				alert(message);
+			}
+		})
+		
+	}
+
+})
+
+/*
+ * user controller
+ * 
+ * */
+app.controller('SideBarController',function($scope,RestFactory){
+	RestFactory.rest('productCategory').getAll({},{},function(response){
+		$scope.categories = response.baseResponse.data;
+	})
+	
+})
+
+
+app.controller("SliderController",function($scope,RestFactory){
+	RestFactory.rest('banner').getAll({},{},function(response){
+		$scope.banners = response.baseResponse.data;
+	})	
+})

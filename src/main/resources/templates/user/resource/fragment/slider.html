@@ -1,0 +1,53 @@
+	<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div th:fragment="sliderFragment">
+		<section id="slider" ng-controller="SliderController"><!--slider-->
+			<div class="container">
+				<div class="row">				
+					<div class="col-sm-12">
+						<div id="slider-carousel" class="carousel slide" data-ride="carousel">
+							<ol class="carousel-indicators">
+								<li data-target="#slider-carousel" 
+								 ng-repeat="banner in banners | orderBy:order track by $index"
+								 data-slide-to="{{ $index }}" 
+								 ng-class="$first ? active : ''"
+								 
+								 ></li>
+							</ol>
+							
+							<div class="carousel-inner">
+								<div 
+								ng-repeat="banner in banners | orderBy:order track by $index"								
+								ng-class="$first ? 'item active' : 'item'">
+									<div class="col-sm-6">
+										<h1><span>E</span>-SHOPPER</h1>
+										<h2>Tempat Belanja Hijab terbaik</h2>
+										<p>{{ banner.desc }}</p>
+										<button type="button" class="btn btn-default get">Get it now</button>
+									</div>
+									<div class="col-sm-6">
+										<img src="/image/{{ banner.image }}" class="girl img-responsive" alt="" />
+									</div>
+								</div>
+								
+							</div>
+							
+							<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+								<i class="fa fa-angle-left"></i>
+							</a>
+							<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							</a>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</section><!--/slider-->
+	</div>
+</body>
+</html>
+			

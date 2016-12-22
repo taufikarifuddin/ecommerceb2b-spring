@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+
+import com.taufik.customvalidator.NotZeroValue;
 
 @Entity
 @Table( name = "banners" )
@@ -16,6 +20,7 @@ public class Banner {
 	int id;
 	
 	@Column( name = "banner_title" )
+	@NotNull( message = "Judul tidak boleh kosong" )
 	String title;
 	
 	@Column( name = "banner_image" )
@@ -28,13 +33,18 @@ public class Banner {
 	boolean isVisible;
 	
 	@Column( name = "banner_order" )
+	@NotZeroValue( message = "Order tidak boleh kosong" )
 	int order;
 
+	@Column( name = "desc_banners" )
+	String desc;
+	
 	public Banner() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Banner(int id, String title, String image, String dateAdded, boolean isVisible, int order) {
+	public Banner(int id, String title, String image, String dateAdded, boolean isVisible, int order,
+			String desc) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -42,6 +52,15 @@ public class Banner {
 		this.dateAdded = dateAdded;
 		this.isVisible = isVisible;
 		this.order = order;
+		this.desc = desc;
+	}
+	
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	
+	public String getDesc() {
+		return desc;
 	}
 
 	public int getId() {

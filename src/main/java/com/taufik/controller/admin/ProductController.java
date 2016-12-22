@@ -1,6 +1,5 @@
 package com.taufik.controller.admin;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,13 +9,10 @@ import com.taufik.base.BaseControllerInterface;
 import com.taufik.model.Product;
 import com.taufik.other.Constant;
 import com.taufik.other.PageAttribute;
-import com.taufik.service.ProductCategoryService;
 
 @Controller
 public class ProductController implements BaseControllerInterface<Product>{
 
-	@Autowired
-	ProductCategoryService service;
 	private final String controllerName = "product";
 	
 	@Override

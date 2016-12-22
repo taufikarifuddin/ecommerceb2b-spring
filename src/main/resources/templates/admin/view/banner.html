@@ -1,0 +1,82 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>	
+	</head>
+	<body>		
+		<div th:fragment="index">
+           	<a href="/admin/{{link}}/add" class="btn btn-flat btn-primary" id="add-btn">
+         		<i class="fa fa-plus"></i> Tambah Data
+         	</a>
+		
+			<table id="table-content" class="text-center table table-stripped" ng-init="link='banner';action='getAll'">
+				<thead>
+					<th>Judul Banner</th>
+					<th>Gambar Banner</th>					
+					<th>Order</th>										
+					<th>Aksi</th>															
+				</thead>
+				<tbody>
+					<tr repeat-end="onEndRepeat()" ng-repeat="detail in data">
+						<td>{{ detail.title }}</td>
+						<td>
+							<img style="height:200px;" src="/image/{{ detail.image }}" class="img img-responsive" />
+						</td>
+						<td>
+							{{ detail.order }}
+						</td>
+						<td>
+							<a href="/admin/banner/remove/{{detail.id}}" class="btn btn-flat btn-danger">
+								<i class="fa fa-remove"></i>
+							</a>							
+						</td>						
+					</tr>
+				</tbody>
+				<tfoot>
+					<th>Judul Banner</th>
+					<th>Gambar Banner</th>					
+					<th>Aksi</th>															
+				</tfoot>
+			</table>
+		</div>
+		
+		<div th:fragment="remove">
+		
+			<table class="table table-bordered"
+				th:attr="ng-init='link=\'banner\';action=\'remove\';id=\''+${id}+'\''"			
+			>
+				<tr>
+					<td>Judul Banner</td>
+					<td>:</td>
+					<td>{{ form.title }}</td>					
+				</tr>
+				<tr>
+					<td>Gambar</td>
+					<td>:</td>
+					<td>
+						<img style="height:300px;" src="/image/{{ form.image }}" class="img img-responsive" />
+					</td>					
+				</tr>
+				<tr>
+					<td>Order</td>
+					<td>:</td>
+					<td>{{ form.order }}</td>					
+				</tr>
+				<tr>
+					<td colspan="3">
+						<button class="btn btn-flat btn-danger" ng-click="remove()">
+							Hapus
+						</button>
+					</td>
+				</tr>
+			</table>
+		</div>		
+		
+		
+		<div th:fragment="add">
+			<form role="form" ng-submit="submit(form)"
+			ng-init="link='banner';action='add'" ng-controller="BannerController">
+				<div th:include="/admin/view/form::${controllerName}"></div>			
+			</form>
+		</div>	
+		
+	</body>
+</html>

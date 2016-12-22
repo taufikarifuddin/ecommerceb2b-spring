@@ -23,7 +23,7 @@ app.factory('responseObserver', function responseObserver($q, $window) {
     };
 });
 
-app.factory('RestFactory',function($resource){
+app.factory('RestFactory',function($resource,$http){
 
     var service = {};
 
@@ -62,8 +62,38 @@ app.factory('RestFactory',function($resource){
         });
     }    
 
-    service.rest = getRestResponse;
+    var uploadFileHandler = function(file,fn){
+    	
+    	var DEFAULT_MESSAGE_FAIL_UPLOAD = "File gagal di upload";
+    	
+    	if( typeof file === 'undefined' ){
+    		fn(false,"",DEFAULT_MESSAGE_FAIL_UPLOAD)
+    	}
+    	
+		var formData = new FormData();
+		formData.append('file',file);
 
+    	
+    	return $http.post("/api/image/upload",formData,{
+			transformRequest: angular.identity,
+            headers: {
+            	'Content-Type': undefined,            	
+            	'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
+            }
+		}).success(function(response){			
+		
+			if( response.baseResponse.error === false){		
+				fn(true,response.baseResponse.message);
+			}else{
+				fn(false,"",DEFAULT_MESSAGE_FAIL_UPLOAD);
+			}
+			
+		})
+    }
+    
+    service.rest = getRestResponse;
+    service.uploadFile = uploadFileHandler;
+    
     return service;
 
 })
@@ -131,6 +161,7 @@ app.factory('ErrorHandlerFactory',function(){
 	
 	
 	var errorData = function(data){
+		console.log(data);
 		var error = {};
 		for( var i = 0; i < data.baseResponse.data.length; i++ ){
 			error[data.baseResponse.data[i].field] = data.baseResponse.data[i].defaultMessage;

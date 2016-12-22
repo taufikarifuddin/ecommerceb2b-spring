@@ -8,5 +8,7 @@ import com.taufik.repository.BannerRepository;
 
 @Service
 public class BannerService extends BaseService<Banner, BannerRepository>{
-
+	
+	public static final String CONTROLLER_NAME = "banner";
+	
 }
