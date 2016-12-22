@@ -17,4 +17,8 @@ public class PageAttribute {
 		model.addAttribute(Constant.ID_INDEX,index);			
 	}
 	
+	public static void setAttribut(Model model,String title){
+		model.addAttribute(Constant.TITLE_INDEX,title);			
+	}
+	
 }
