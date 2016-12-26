@@ -1,29 +1,3 @@
-
-
-app.controller('LoginController',function(LoginFactory,$scope){
-	
-	$scope.loginLoading = false;
-	$scope.status = "info";
-	$scope.msg = "Silahkan masukkan email dan password";
-	
-	
-	$scope.submit = function(data){
-		
-		$scope.loginLoading = true;
-		
-		LoginFactory.login().admin(data,{},function(response){
-			$scope.loginLoading = false;
-			$scope.status = response.error === "true" ? "danger" : "success";
-			$scope.msg = response.msg;
-			if( $scope.status !== "true" ){
-				setTimeout(function(){
-					window.location.href=response.url;
-				},1000);
-			}
-		})
-	}	
-})
-
 app.controller('PageController',function(ErrorHandlerFactory,DataAttributFactory,RestFactory,$scope,$timeout){
 	
 	$scope.isShowLoader = true;
@@ -339,3 +313,71 @@ app.controller("SliderController",function($scope,RestFactory){
 		$scope.banners = response.baseResponse.data;
 	})	
 })
+
+app.controller('RegisterController',function($scope,MemberService,DataAttributFactory){
+	
+	$scope.isValid = true;
+	$scope.isValidPassword = true;
+	$scope.isValidEmail = true;
+	$scope.isLoad = false;
+	$scope.form = {};
+	$scope.isLoadingSubmit = false;
+	$scope.isSuccessRegister = false;
+	
+	$scope.submit = function(data){
+		if( $scope.form.error != 'undefined' )
+			DataAttributFactory.remove($scope.form.error);
+		$scope.isLoadingSubmit = true;
+		MemberService.update(data,function(isSuccess,data){
+			if( !isSuccess ){
+				$scope.form.error = {};				
+				$scope.form.error = data;
+			}else{
+				$scope.isSuccessRegister = true;
+			}
+			$scope.isLoadingSubmit = false;
+		});
+	}
+	
+	$scope.$watch('form.email',function(newVal,oldVal){
+		$scope.isValidEmail = false;
+		$scope.isLoad = true;
+		MemberService.checkEmail(newVal,function(response){
+			$scope.isValidEmail = response;
+			$scope.isLoad = false;
+		})
+	})
+	
+	$scope.$watchGroup(['form.password','form.repassword'],function(newVal,oldVal,scope){
+		if( newVal[0] === newVal[1] ){
+			$scope.isValidPassword = true;
+		}else{
+			$scope.isValidPassword = false;			
+		}
+	});
+
+	$scope.$watchGroup(['isValidPassword','isValidEmail'],function(newVal){
+		$scope.isValid = $scope.isValidPassword && $scope.isValidEmail;
+	})
+	
+})
+
+app.controller('LoginUserController',function(LoginFactory,$scope){	
+	$scope.status = "info";
+	$scope.msg = "Silahkan masukkan username dan password";
+	
+	$scope.submit = function(data){
+		LoginFactory.login().user(data,{},function(response){
+			$scope.loginLoading = false;
+			$scope.status = response.error === "true" ? "danger" : "success";
+			$scope.msg = response.msg;
+			console.log(response);
+			if( response.error !== "true" ){
+				setTimeout(function(){
+					window.location.href=response.url;
+				},1000);
+			}
+		})
+	}
+	
+});

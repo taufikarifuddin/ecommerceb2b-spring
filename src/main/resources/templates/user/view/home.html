@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+</head>
+	<body th:fragment="pageFragment">
+		<section th:include="/user/resource/fragment/slider::sliderFragment"></section>	
+		<div class="container">
+			<div th:include="/user/resource/fragment/sidebar::sideBarFragment">
+			</div>
+			<div class="col-sm-9">
+				testing lagi gan
+			</div>				
+		</div>
+	</body>
+</html>

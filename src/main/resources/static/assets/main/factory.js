@@ -107,6 +107,10 @@ app.factory('DataAttributFactory',function(){
 	}
 	
 	var trimData = function(data){
+		
+		if( typeof data === 'undefined' )
+			return {};
+			
         for( var k in data ){
             if( typeof data[k] === 'string' )
 	            if( data[k].trim() == "" ){
@@ -139,7 +143,7 @@ app.factory('LoginFactory',function($resource){
                 // params : data,                
             },
             'user' : {
-                url : '/login',
+                url : '/user/login',
                 method : 'POST',
                 headers : {
                 	'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
@@ -161,7 +165,6 @@ app.factory('ErrorHandlerFactory',function(){
 	
 	
 	var errorData = function(data){
-		console.log(data);
 		var error = {};
 		for( var i = 0; i < data.baseResponse.data.length; i++ ){
 			error[data.baseResponse.data[i].field] = data.baseResponse.data[i].defaultMessage;
@@ -171,6 +174,7 @@ app.factory('ErrorHandlerFactory',function(){
 	
 	var isSuccess = function(data,fn){
 		var dataResponse = data.baseResponse;
+		console.log(dataResponse);
 		if(dataResponse.error === false ){			
 			if( typeof dataResponse.data != 'undefined' ){
 				fn(true,dataResponse.data);				
@@ -194,3 +198,15 @@ app.factory('ErrorHandlerFactory',function(){
 
 })
 
+app.factory('ParserFactory',function(){
+	return {
+		parse : function(data){
+			var dataParse = data.baseResponse;
+			return {
+				data : dataParse.data,
+				msg : dataParse.msg,
+				isError : dataParse.error
+			}
+		}
+	};
+})

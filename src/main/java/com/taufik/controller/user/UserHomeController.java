@@ -11,8 +11,13 @@ public class UserHomeController {
 	
 	@RequestMapping("/")	
 	public String home(Model model){
-		PageAttribute.setAttribut(model, "Home");
+		PageAttribute.setAttribut(model,"home","Home");
 		return "user/index";
-	}
+	}	
 	
+	@RequestMapping( value = "/user/login" )
+	public String login(Model model){
+		PageAttribute.setAttribut(model,"login","Home");
+		return "user/index";		
+	}
 }

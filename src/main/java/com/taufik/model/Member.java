@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import com.taufik.other.Constant;
 
 @Entity
 @Table( name = "member" )
@@ -22,6 +25,7 @@ public class Member {
 	String name;
 	
 	@Column( name = "member_email_address" )
+	@NotNull( message = "Email tidak boleh kosong" )
 	String email;
 	
 	@Column( name = "member_contact" )
@@ -31,6 +35,7 @@ public class Member {
 	String contact2;
 	
 	@Column( name = "member_password" )
+	@NotNull( message = "Password tidak boleh kosong" )
 	String password;
 	
 	@Column( name = "member_is_active",columnDefinition = "default '1'" )
@@ -45,7 +50,7 @@ public class Member {
 	@Column( name = "member_account_modified" )
 	String lastModificationDate;
 	
-	@Column( name = "member_rolemember_role_id" )
+	@Column( name = "member_rolemember_role_id",columnDefinition = "default '"+Constant.USER_STATUS+"'" )	
 	int roleId;
 
 	public Member(int id, int genderID, String name, String email, String contact, String contact2, String password,

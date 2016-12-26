@@ -21,4 +21,9 @@ public class PageAttribute {
 		model.addAttribute(Constant.TITLE_INDEX,title);			
 	}
 	
+	public static void setAttribut(Model model,String view,String title){
+		model.addAttribute(Constant.PAGE_INDEX,view);	
+		model.addAttribute(Constant.TITLE_INDEX,title);	
+	}
+	
 }
