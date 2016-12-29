@@ -1,11 +1,19 @@
 package com.taufik.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Cascade;
 
 import com.taufik.customvalidator.NotZeroValue;
 
@@ -50,6 +58,16 @@ public class Product {
 	@Column( name = "product_code" )
 	@NotNull( message = "Kode Barang tidak boleh kosong" )
 	String code;
+
+	@OneToMany( mappedBy = "productId" )
+	Set<ProductImage> images;
+	
+	@OneToMany( mappedBy = "productId" )
+	Set<ProductDiscount> discounts;	
+	
+	@ManyToOne( cascade = CascadeType.ALL )
+	@JoinColumn( name = "product_categoryproduct_category_id",insertable = false, updatable = false )
+	ProductCategory category;
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
@@ -57,8 +75,10 @@ public class Product {
 	
 
 	public Product(int id, String name, String dateAdded, String lastModified, String desc, int viewedCounter,
-			int price, int isVisible, int categoryId, String code) {
+			int price, int isVisible, int categoryId, String code,Set<ProductImage> images,
+			Set<ProductDiscount> discount,ProductCategory category) {
 		super();
+		this.images = images;
 		this.id = id;
 		this.name = name;
 		this.dateAdded = dateAdded;
@@ -69,6 +89,32 @@ public class Product {
 		this.isVisible = isVisible;
 		this.categoryId = categoryId;
 		this.code = code;
+		this.discounts = discount;
+		this.category = category;
+	}
+	
+	public ProductCategory getCategory() {
+		return category;
+	}
+	
+	public Set<ProductDiscount> getDiscounts() {
+		return discounts;
+	}
+	
+	public void setCategory(ProductCategory category) {
+		this.category = category;
+	}
+	
+	public void setDiscounts(Set<ProductDiscount> discounts) {
+		this.discounts = discounts;
+	}
+	
+	public void setImages(Set<ProductImage> images) {
+		this.images = images;
+	}
+	
+	public Set<ProductImage> getImages() {
+		return images;
 	}
 
 	public void setIsVisible(int isVisible) {

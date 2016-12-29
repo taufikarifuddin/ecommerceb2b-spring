@@ -35,6 +35,7 @@ public class BaseService<T,K extends JpaRepository<T, Integer>>{
 	public BaseResponse getById(int id) {		
 		BaseResponse response = this.setResponse();
 		try{
+			response.setErrorResponse(false);
 			response.setDataResponse(repo.findOne(id));
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -48,6 +49,7 @@ public class BaseService<T,K extends JpaRepository<T, Integer>>{
 	public BaseResponse getAll() {
 		BaseResponse response = this.setResponse();
 		try{
+			response.setErrorResponse(false);
 			response.setDataResponse(repo.findAll());
 		}catch(Exception e){
 			response.setMessageResponse(e.getMessage());

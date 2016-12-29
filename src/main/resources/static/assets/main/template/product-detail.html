@@ -1,0 +1,19 @@
+<div class="col-sm-4">
+	<div class="product-image-wrapper">
+		<div class="single-products">
+			<div class="productinfo text-center">
+				<img src="/image/{{ detail.images[0].image }}" alt="" />
+				<h2>{{ detail.price }}</h2>
+				<p>{{ detail.name }}</p>
+				<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-eye"></i>Lihat Detail</a>
+			</div>
+			<div class="product-overlay">
+				<div class="overlay-content">
+					<h2>{{ detail.price }}</h2>
+					<p>{{ detail.name }}</p>
+					<a href="/product/productDetail/{{ detail.id }}" class="btn btn-default add-to-cart"><i class="fa fa-eye"></i>Lihat Detail</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

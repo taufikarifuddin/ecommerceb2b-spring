@@ -1,7 +1,9 @@
 var app = angular.module('app',['ngResource']);
 
+app.value('BASE_TEMPLATE',"/assets/main/template")
+
 app.config(function($httpProvider){
-//	$httpProvider.interceptors.push('responseObserver');
+	$httpProvider.interceptors.push('responseObserver');
 })
 
 app.factory('responseObserver', function responseObserver($q, $window) {
@@ -12,7 +14,7 @@ app.factory('responseObserver', function responseObserver($q, $window) {
                 $window.location = '/error/forbiden';
                 break;
             case 404:
-                $window.location = '/error/notfound';            	
+                $window.location = '/error/asdasd';            	
             case 400:;
             case 500:
                 $window.location = '/error/server';

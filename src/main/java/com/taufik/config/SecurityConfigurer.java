@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.taufik.other.Constant;
 import com.taufik.other.FailureLoginHandler;
@@ -39,7 +40,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 			.successHandler( new SuccessLoginHandler() )
 			.failureHandler(new FailureLoginHandler()).and()
 			.logout()
-				.logoutUrl("/user/logout")
+				.logoutRequestMatcher( new AntPathRequestMatcher("/user/logout") )
+//				.logoutUrl("/user/logout")
 				.logoutSuccessUrl("/user/login")
 				.clearAuthentication(true);			
 			

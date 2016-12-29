@@ -381,3 +381,25 @@ app.controller('LoginUserController',function(LoginFactory,$scope){
 	}
 	
 });
+
+app.controller('ProductController',function($scope,ProductService){
+	
+	$scope.listBarang = [];
+	ProductService.getAll(1,function(isSuccess,data){
+		$scope.listBarang = data;
+	});
+	
+})
+
+
+app.controller('DetailProduct',function($scope,ProductService){
+	
+	$scope.$watch('id',function(newVal,oldVal){
+		ProductService.getDetail(newVal,function(isSuccess,data){
+			
+			console.log(data);
+			
+		});
+	})
+	
+})

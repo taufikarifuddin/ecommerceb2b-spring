@@ -7,8 +7,12 @@
 		<div class="container">
 			<div th:include="/user/resource/fragment/sidebar::sideBarFragment">
 			</div>
-			<div class="col-sm-9">
-				testing lagi gan
+			<div class="col-sm-9 padding-right" ng-controller="ProductController">
+				<div class="features_items"><!--features_items-->
+					<h2 class="title text-center">Banyak Dilihat</h2>
+					<product-detail ng-repeat="detailBarang in listBarang" detail="detailBarang">
+					</product-detail>
+				</div>
 			</div>				
 		</div>
 	</body>

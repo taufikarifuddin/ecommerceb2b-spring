@@ -24,3 +24,16 @@ app.directive('repeatEnd',function(){
         }		 
 	}
 })
+
+app.directive('productDetail',function(BASE_TEMPLATE){
+	return {
+		restrict : 'E',
+		scope : {
+			'detail' : '=detail'
+		},
+		templateUrl : BASE_TEMPLATE+"/product-detail.html",
+		link : function($scope,element,attr){
+			console.log($scope.detail);
+		}
+	}
+})

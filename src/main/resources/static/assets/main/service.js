@@ -24,14 +24,35 @@ app.service('MemberService',function($resource,RestFactory,ParserFactory,DataAtt
 		
 		update : function(data,fn){
 			RestFactory.rest("member").update({},DataAttributFactory.trim(data),function(response){				
-				ErrorHandlerFactory.responseHandler(response,function(isSuccess,data){
-					
+				ErrorHandlerFactory.responseHandler(response,function(isSuccess,data){					
 					fn(isSuccess,data);
 				});
 			})
 		}
 		
 	};
-		
-		
+			
+})
+
+app.service('ProductService',function($resource,RestFactory,ParserFactory,DataAttributFactory,ErrorHandlerFactory){
+	
+	var controllerName = "product";		
+	
+	return {
+		getAll : function(start,fn){			
+			RestFactory.rest(controllerName).getAll({ start : start },{},function(response){
+				ErrorHandlerFactory.responseHandler(response,function(isSuccess,data){					
+					fn(isSuccess,data);
+				});
+			})
+		},
+		getDetail : function(id,fn){
+			RestFactory.rest(controllerName).getDetail({ id : id },{},function(response){
+				ErrorHandlerFactory.responseHandler(response,function(isSuccess,data){					
+					fn(isSuccess,data);
+				});				
+			});
+		}
+	};
+	
 })
