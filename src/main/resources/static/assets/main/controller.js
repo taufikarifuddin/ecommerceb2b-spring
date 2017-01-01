@@ -119,8 +119,6 @@ app.controller('ProductFormController',function(RestFactory,$scope,$resource){
 		$scope.$parent.action = $scope.action;
 		$scope.$parent.id = $scope.id;		
 	})
-//	console.log($scope.id);
-//	if( typeof $scope. )
 	
 	
 })
@@ -183,8 +181,7 @@ app.controller('GaleryController',function(ErrorHandlerFactory,DataAttributFacto
 	})
 	
 	$scope.$watch('productgalery',function(newValue,oldValue){				
-		if( typeof newValue != "undefined" ){			
-//			console.log(newValue);
+		if( typeof newValue != "undefined" ){	
 			$scope.productGalery = newValue;
 			var dataImage = newValue.type.split("/");
 			if( dataImage.length == 2 && $scope.allowExt.indexOf(dataImage[1]) > -1){
@@ -392,14 +389,84 @@ app.controller('ProductController',function($scope,ProductService){
 })
 
 
-app.controller('DetailProduct',function($scope,ProductService){
+app.controller('DetailProductController',function($scope,ProductService,CartService,EVALUATE_DISC){
+	
+
+	$scope.form = {};
+	
+
+	$scope.form.qty = 0;
 	
 	$scope.$watch('id',function(newVal,oldVal){
+				
+		$scope.form.productId = newVal;
+		
 		ProductService.getDetail(newVal,function(isSuccess,data){
-			
-			console.log(data);
-			
+			$scope.image = data.images;
+			$scope.discount = data.discounts;
+			$scope.data = data;		
 		});
+		
+		
+		
 	})
 	
+	$scope.$watch('form.qty',function(newVal,oldVal){
+		if( typeof newVal !== 0 && typeof $scope.data !== 'undefined'){
+			if( newVal < 0 || typeof newVal == 'undefined' || typeof newVal =='string' ){
+				$scope.jumlah  = 0;
+			}
+			console.log(newVal);
+			$scope.totalPembelian = EVALUATE_DISC(newVal,$scope.discount,$scope.data.price) * newVal;
+		}else
+			$scope.totalPembelian = 0;
+		
+	})
+	
+	$scope.getTotalImageContinaer = function(totalElem){
+		if( typeof totalElem  == 'undefined'){
+			totalElem = 0;
+		}
+		return new Array(Math.ceil( ( totalElem / 3 ) ));
+	}
+	
+	$scope.submit = function(form){
+		CartService.update(form,function(isSuccess,data){
+			console.log(data);
+		})
+	}
+		
+})
+
+app.controller('CartController',function($scope,CartService,EVALUATE_DISC){
+	
+	$scope.total = 0;
+	
+	CartService.getAll(function(isSuccess,data){
+		$scope.data = data;
+		
+		for( var i = 0; i < data.length; i++ ){
+			$scope.data[i].total =  EVALUATE_DISC(data[i].qty,
+					data[i].product.discounts,data[i].product.price) * data[i].qty;
+		}
+		
+	})	
+	
+	$scope.$watch('data',function(newVal,oldVal){
+		if( typeof newVal === 'object' ){
+			newVal.forEach(function(elem,itr){
+				$scope.total += elem.total;
+			})
+		}else{
+			$scope.total = 0;
+		}
+	})
+	
+	$scope.remove = function(data){
+		CartService.remove(data.id,function(isSuccess,data){
+			if( isSuccess ){
+				$scope.data.splice( $scope.data.indexOf(data) , 1 );
+			}
+		})
+	}
 })

@@ -1,14 +1,25 @@
 var app = angular.module('app',['ngResource']);
 
 app.value('BASE_TEMPLATE',"/assets/main/template")
-
-app.config(function($httpProvider){
-	$httpProvider.interceptors.push('responseObserver');
-})
+app.value('USER_API_PREFIX',"/user");
+app.value('ADMIN_API_PREFIX',"/admin");
+app.value('EVALUATE_DISC',function(total,listDisc,price){	
+	
+	var discount = price;
+	for(var i =0; i < listDisc.length; i++){
+		if( total >= listDisc[i].tracehold ){
+			discount = listDisc[i].discount;
+			console.log(discount);
+		}else break;
+	}
+	return discount;
+});
 
 app.factory('responseObserver', function responseObserver($q, $window) {
+	console.log('called');
     return {
         'responseError': function(errorResponse) {
+        	console.log(errorResponse);
             switch (errorResponse.status) {
             case 403:
                 $window.location = '/error/forbiden';
@@ -19,21 +30,33 @@ app.factory('responseObserver', function responseObserver($q, $window) {
             case 500:
                 $window.location = '/error/server';
                 break;
+            case 302 : 
+            	$window.location = "/user/login";
+            	break;
             }
             return $q.reject(errorResponse);
         }
     };
 });
 
+
+app.config(function($httpProvider){
+//	$httpProvider.interceptors.push('responseObserver');
+})
+
+
 app.factory('RestFactory',function($resource,$http){
 
     var service = {};
 
-    var getRestResponse = function(controllerName){
-       
+    var getRestResponse = function(controllerName,prefix){
+    	
+    	if( typeof prefix  == 'undefined')
+    		prefix = "";
+    		
         return $resource("",{},{
             'getDetail' : {
-                url : '/api/'+controllerName+'/get',
+                url : prefix+'/api/'+controllerName+'/get',
                 method : 'GET',
                 headers : {
                 	'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
@@ -41,21 +64,21 @@ app.factory('RestFactory',function($resource,$http){
 
             },
             'getAll' : {
-                url : '/api/'+controllerName+'/getAll',
+                url : prefix+'/api/'+controllerName+'/getAll',
                 method : 'GET',
                 headers : {
                 	'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
                 }
             },
             'update' : {
-                url : '/api/'+controllerName+'/update',
+                url : prefix+'/api/'+controllerName+'/update',
                 method : 'POST',
                 headers : {
                 	'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
                 }
             },
             'remove' : {
-                url : '/api/'+controllerName+'/remove',
+                url : prefix+'/api/'+controllerName+'/remove',
                 method : 'POST',
                 headers : {
                 	'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
@@ -174,10 +197,23 @@ app.factory('ErrorHandlerFactory',function(){
 		return error;
 	}
 	
+	var defaultResponseHandler = function(response,fn){
+		isSuccess(response,function(isSuccess,data){					
+			fn(isSuccess,data);
+		});	
+	}
+	
 	var isSuccess = function(data,fn){
-		var dataResponse = data.baseResponse;
-		console.log(dataResponse);
-		if(dataResponse.error === false ){			
+		var dataResponse = data.baseResponse;		
+		
+		
+		if( typeof dataResponse === 'undefined' ){
+			fn(false,null);
+			return;
+		}
+			
+		
+		if( dataResponse.error === false ){			
 			if( typeof dataResponse.data != 'undefined' ){
 				fn(true,dataResponse.data);				
 			}else{
@@ -195,6 +231,7 @@ app.factory('ErrorHandlerFactory',function(){
 	
 	service.getErrorData = errorData;
 	service.responseHandler = isSuccess;
+	service.defaultResponseHandler = defaultResponseHandler;
 	
 	return service;
 

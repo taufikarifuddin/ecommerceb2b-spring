@@ -1,4 +1,4 @@
-app.service('MemberService',function($resource,RestFactory,ParserFactory,DataAttributFactory,ErrorHandlerFactory){
+app.service('MemberService',function($resource,RestFactory,DataAttributFactory,ErrorHandlerFactory){
 	
 	var controllerName = "member"
 	
@@ -34,7 +34,7 @@ app.service('MemberService',function($resource,RestFactory,ParserFactory,DataAtt
 			
 })
 
-app.service('ProductService',function($resource,RestFactory,ParserFactory,DataAttributFactory,ErrorHandlerFactory){
+app.service('ProductService',function($resource,RestFactory,DataAttributFactory,ErrorHandlerFactory){
 	
 	var controllerName = "product";		
 	
@@ -55,4 +55,28 @@ app.service('ProductService',function($resource,RestFactory,ParserFactory,DataAt
 		}
 	};
 	
+})
+
+
+app.service('CartService',function($resource,RestFactory,DataAttributFactory,ErrorHandlerFactory,USER_API_PREFIX){
+	
+	var controllerName = "cart";
+	
+	return {
+		update : function(data,fn){
+			RestFactory.rest(controllerName,USER_API_PREFIX).update({}, data ,function(response){
+				ErrorHandlerFactory.defaultResponseHandler(response,fn);
+			});
+		},
+		getAll : function(fn){
+			RestFactory.rest(controllerName,USER_API_PREFIX).getAll({},{},function(response){
+				ErrorHandlerFactory.defaultResponseHandler(response,fn);
+			});			
+		},
+		remove : function(id,fn){
+			RestFactory.rest(controllerName,USER_API_PREFIX).remove({ id : id },{},function(response){
+				ErrorHandlerFactory.defaultResponseHandler(response,fn);
+			});			
+		}
+	};	
 })

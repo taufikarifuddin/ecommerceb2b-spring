@@ -1,10 +1,14 @@
 package com.taufik.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table( name = "member_cart" )
@@ -19,21 +23,34 @@ public class MemberCart {
 	String dateAdded;
 	
 	@Column( name = "member_cart_qty" )
-	String qty;
+	int qty;
 	
 	@Column( name = "membermember_id" )
 	int memberId;
 	
 	@Column( name= "productproduct_id" )
 	int productId;
+	
+	@OneToOne
+	@JoinColumn( name = "productproduct_id",insertable = false,updatable = false )
+	Product product;
 
-	public MemberCart(int id, String dateAdded, String qty, int memberId, int productId) {
+	public MemberCart(int id, String dateAdded, int qty, int memberId, int productId,Product product) {
 		super();
 		this.id = id;
 		this.dateAdded = dateAdded;
 		this.qty = qty;
 		this.memberId = memberId;
 		this.productId = productId;
+		this.product = product;
+	}
+	
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
+	public Product getProduct() {
+		return product;
 	}
 	
 	public MemberCart() {
@@ -56,11 +73,11 @@ public class MemberCart {
 		this.dateAdded = dateAdded;
 	}
 
-	public String getQty() {
+	public int getQty() {
 		return qty;
 	}
 
-	public void setQty(String qty) {
+	public void setQty(int qty) {
 		this.qty = qty;
 	}
 

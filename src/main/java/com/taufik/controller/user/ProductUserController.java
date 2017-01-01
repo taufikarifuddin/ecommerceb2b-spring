@@ -11,8 +11,8 @@ import com.taufik.other.PageAttribute;
 public class ProductUserController {
 
 	@RequestMapping( value = "/product/productDetail/{id}" )
-	public String detailProduct(@PathVariable( name = "id" )int id,Model model){
-		PageAttribute.setAttribut(model,"productDetail","Produk Detail",id);		
+	public String detailProduct(@PathVariable(name = "id") int id,Model model){
+		PageAttribute.setAttribut(model,"productDetail","Product Detail",id);		
 		return "user/index";
 	}
 	

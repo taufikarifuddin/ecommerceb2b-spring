@@ -15,6 +15,7 @@ public class Constant {
 	
 	//api prefix dan postfix konstanta
 	public static final String API_PREFIX = "/api/";	
+	public static final String API_USER_PREFIX = "/user/api/";		
 	public static final String UPDATE_POSTFIX = "/update";
 	public static final String REMOVE_POSTFIX = "/remove";
 	public static final String GET_POSTFIX = "/get";
