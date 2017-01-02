@@ -29,8 +29,8 @@ app.factory('responseObserver', function responseObserver($q, $window) {
             case 400:;
             case 500:
                 $window.location = '/error/server';
-                break;
-            case 302 : 
+                break;               
+            case 401 : 
             	$window.location = "/user/login";
             	break;
             }
@@ -41,7 +41,7 @@ app.factory('responseObserver', function responseObserver($q, $window) {
 
 
 app.config(function($httpProvider){
-//	$httpProvider.interceptors.push('responseObserver');
+	$httpProvider.interceptors.push('responseObserver');
 })
 
 

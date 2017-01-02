@@ -27,17 +27,17 @@ public class Order {
 	@Column( name = "member_member_name" )
 	String memberName; 
 	
-	@Column( name = "payment_methodpayment_method_id" )
-	String paymentId;
+	@Column( name = "	alamat_pengiriman" )
+	String address;
 
-	public Order(int id, int memberId, int statusId, String orderCreated, String memberName, String paymentId) {
+	public Order(int id, int memberId, int statusId, String orderCreated, String memberName, String address) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
 		this.statusId = statusId;
 		this.orderCreated = orderCreated;
 		this.memberName = memberName;
-		this.paymentId = paymentId;
+		this.address = address;
 	}
 	
 	public Order() {
@@ -85,10 +85,10 @@ public class Order {
 	}
 
 	public String getPaymentId() {
-		return paymentId;
+		return address;
 	}
 
-	public void setPaymentId(String paymentId) {
-		this.paymentId = paymentId;
+	public void setAddress(String paymentId) {
+		this.address = paymentId;
 	}
 }
