@@ -39,14 +39,19 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 			.anyRequest().permitAll()
 			.and()
 			.exceptionHandling()
-			.authenticationEntryPoint(new AuthenticationEntryPoint() {
+/*			.authenticationEntryPoint(new AuthenticationEntryPoint() {
 				
 				@Override
 				public void commence(HttpServletRequest arg0, HttpServletResponse arg1, AuthenticationException arg2)
 						throws IOException, ServletException {
-					arg1.sendError(HttpServletResponse.SC_UNAUTHORIZED,arg2.getMessage());					
+					
+					String requestedWith = arg0.getHeader("X-Requested-With");
+			        Boolean isAjax = requestedWith != null ? "XMLHttpRequest".equals(requestedWith) : false;			        
+			        if( isAjax ){				        
+						arg1.sendError(HttpServletResponse.SC_UNAUTHORIZED,arg2.getMessage());								        	
+			        }
 				}
-			})
+			})*/
 			.and()
 			.formLogin()
 			.usernameParameter("username")

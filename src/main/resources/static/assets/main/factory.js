@@ -6,11 +6,11 @@ app.value('ADMIN_API_PREFIX',"/admin");
 app.value('EVALUATE_DISC',function(total,listDisc,price){	
 	
 	var discount = price;
-	for(var i =0; i < listDisc.length; i++){
+	for(var i =0; i < listDisc.length; i++){		
 		if( total >= listDisc[i].tracehold ){
 			discount = listDisc[i].discount;
-			console.log(discount);
-		}else break;
+			break;
+		};
 	}
 	return discount;
 });

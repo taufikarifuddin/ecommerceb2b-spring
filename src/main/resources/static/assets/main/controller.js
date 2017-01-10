@@ -154,6 +154,7 @@ app.controller('DiscountController',function(ErrorHandlerFactory,DataAttributFac
 			data = {};
 		data['productId'] = $scope.$parent.id;
 		DataAttributFactory.remove($scope.errordiscount);	
+		
 		RestFactory.rest("productDiscount").update({},DataAttributFactory.trim(data),function(response){
 			ErrorHandlerFactory.responseHandler(response,function(isSuccess,dataVal){
 				if( isSuccess ){
@@ -397,17 +398,14 @@ app.controller('DetailProductController',function($scope,ProductService,CartServ
 
 	$scope.form.qty = 0;
 	
-	$scope.$watch('id',function(newVal,oldVal){
-				
-		$scope.form.productId = newVal;
+	$scope.$watch('id',function(newVal,oldVal){				
+		$scope.form.productId = newVal;		
 		
 		ProductService.getDetail(newVal,function(isSuccess,data){
 			$scope.image = data.images;
 			$scope.discount = data.discounts;
 			$scope.data = data;		
 		});
-		
-		
 		
 	})
 	
@@ -469,4 +467,16 @@ app.controller('CartController',function($scope,CartService,EVALUATE_DISC){
 			}
 		})
 	}
+})
+
+app.controller('CheckoutFormController',function($scope,OrderService){
+	
+	$scope.date = new Date();
+	$scope.loading = false;
+	$scope.submit = function(alamat){
+		OrderService.checkout({ address : alamat },function(isSuccess,data){
+			window.location.href = data;
+		})
+	}
+	
 })

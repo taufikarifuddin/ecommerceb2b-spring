@@ -1,5 +1,5 @@
 package com.taufik.model;
 
 public enum OrderStatus {
-	WAITING,POST,PENDING,DELIVERED;
+	PENDING,DALAM_PENGIRIMAN,DELIVERED,CANCEL;
 }

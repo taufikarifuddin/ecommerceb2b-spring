@@ -18,8 +18,14 @@
 									<td></td>
 								</tr>
 							</thead>
-							<tbody>
-								
+							<tbody>								
+								<tr>
+									<td colspan="6">
+										<div ng-if="data.length == 0" class="alert alert-danger">
+											Anda tidak memiliki Barang yang ingin di beli, klik <a href="/">Disini </a>untuk belanja
+										</div>								
+									</td>
+								</tr>
 								<tr ng-repeat="dataDetail in data">							
 									<td class="cart_product">
 										<a href="">
@@ -62,7 +68,7 @@
 					</div>
 				</div>
 			</section>
-			<section id="do_action">
+			<section id="do_action" ng-if="data.length != 0">
 				<div class="container">
 					<div class="row">					
 						<div class="col-sm-12">
@@ -70,7 +76,7 @@
 								<ul>
 									<li>Total <span>Rp. {{ total }}</span></li>								
 								</ul>
-									<a class="btn btn-default update" href="">Check out</a>
+									<a class="btn btn-default update" href="/user/cart/checkout">Check out</a>
 							</div>
 						</div>
 					</div>

@@ -15,4 +15,9 @@ public class CartController {
 		return "user/index";
 	}
 	
+	@RequestMapping( value = "/user/cart/checkout")
+	public String checkout(Model model){
+		PageAttribute.setAttribut(model,"checkOut","Check Out");		
+		return "user/index";		
+	}
 }	

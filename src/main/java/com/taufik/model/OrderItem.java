@@ -24,18 +24,74 @@ public class OrderItem {
 	@Column( name = "productproduct_id" )
 	int productId;
 
+	@Column( name = "product_product_name" )
+	String productName;
+	
+	@Column( name = "product_product_code" )
+	String productCode;	
+	
+	@Column( name = "ordermember_order_id" )
+	int orderId;
+	
 	public OrderItem() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	
-	public OrderItem(int id, int qty, int finalPrice, int productId) {
+	public OrderItem(int id, int qty, int finalPrice, int productId, String productName, String productCode,
+			int orderId) {
 		super();
 		this.id = id;
 		this.qty = qty;
 		this.finalPrice = finalPrice;
 		this.productId = productId;
+		this.productName = productName;
+		this.productCode = productCode;
+		this.orderId = orderId;
 	}
+
+
+
+
+	public String getProductName() {
+		return productName;
+	}
+
+
+
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+
+
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+
+
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+
+
+
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+
+
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
 
 
 
