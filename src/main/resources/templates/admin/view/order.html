@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div th:fragment="index">
+		<table id="table-content" class="text-center table table-stripped"
+			ng-init="link='order';action='getAll'">
+			<thead>
+				<th>Nama Pemesan</th>
+				<th>Alamat Pengiriman</th>
+				<th>Status</th>
+				<th>Aksi</th>
+			</thead>
+			<tbody>
+				<tr repeat-end="onEndRepeat()" ng-repeat="detail in data">
+					<td>{{ detail.memberName }}</td>
+					<td>{{ detail.address }}</td>
+					<td>{{ detail.statusId }}</td>
+					<td><a href="/admin/order/edit/{{detail.id}}"
+						class="btn btn-flat btn-warning"> <i class="fa fa-pencil"></i>
+					</a>&nbsp; <a href="/admin/order/remove/{{detail.id}}"
+						class="btn btn-flat btn-danger"> <i class="fa fa-remove"></i>
+					</a></td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<th>Nama Pemesan</th>
+				<th>Alamat Pengiriman</th>
+				<th>Status</th>
+				<th>Aksi</th>
+			</tfoot>
+		</table>
+	</div>
+	<div th:fragment="edit">
+		<table class="table table-bordered"
+			th:attr="ng-init='link=\'order\';action=\'edit\';id=\''+${id}+'\''">
+			</table>
+	</div>
+</body>
+</html>

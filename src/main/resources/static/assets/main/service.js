@@ -134,6 +134,22 @@ app.service('OrderService', function($resource, RestFactory,
 				})
 			})			
 		},
+		updateStatus : function(data,fn){
+			RestFactory.rest(controllerName).update(data,{},function(response){
+				ErrorHandlerFactory.responseHandler(response, function(
+						isSuccess, data) {
+					fn(isSuccess, data);
+				})
+			});
+		},
+		detail : function(id,fn){
+			RestFactory.rest(controllerName).getDetail({ id : id },{},function(response){
+				ErrorHandlerFactory.responseHandler(response, function(
+						isSuccess, data) {
+					fn(isSuccess, data);
+				})
+			});			
+		}
 	};
 
 });

@@ -41,7 +41,7 @@ app.factory('responseObserver', function responseObserver($q, $window) {
 
 
 app.config(function($httpProvider){
-	$httpProvider.interceptors.push('responseObserver');
+//	$httpProvider.interceptors.push('responseObserver');
 })
 
 

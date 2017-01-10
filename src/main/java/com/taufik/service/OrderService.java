@@ -38,6 +38,18 @@ public class OrderService extends BaseService<Order,OrderRepository>{
 	@Autowired
 	MemberCartRepository cartRepository;
 	
+	public BaseResponse update(int id,String status){
+		BaseResponse response = this.setResponse();
+		try{
+			Order order = this.repo.findOne(id);
+			order.setStatusId( OrderStatus.valueOf(status) );
+			this.save(order);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+	
 	@Override
 	public BaseResponse save(Order data) {
 		BaseResponse response = this.setResponse();
