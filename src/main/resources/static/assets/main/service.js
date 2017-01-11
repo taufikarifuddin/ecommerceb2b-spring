@@ -77,19 +77,24 @@ app.service('ProductService', function($resource, RestFactory,
 
 	var controllerName = "product";
 
+	var customResource = $resource("", {}, {
+		'search' : {
+			url : '/api/'+controllerName+'/search',
+			method : 'POST',
+			headers : {
+				'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
+			}
+		}
+	})
+	
 	return {
-		getAll : function(start, fn) {
-			RestFactory.rest(controllerName).getAll(
-					{
-						start : start
-					},
-					{},
-					function(response) {
-						ErrorHandlerFactory.responseHandler(response, function(
-								isSuccess, data) {
-							fn(isSuccess, data);
-						});
-					})
+		getAll : function(data, fn) {
+			customResource.search(data,{},function(response){
+				ErrorHandlerFactory.responseHandler(response, function(
+						isSuccess, data) {
+					fn(isSuccess, data);
+				});				
+			})
 		},
 		getDetail : function(id, fn) {
 			RestFactory.rest(controllerName).getDetail(

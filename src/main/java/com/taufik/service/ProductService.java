@@ -12,6 +12,8 @@ import com.taufik.repository.ProductRepository;
 @Service
 public class ProductService extends BaseService<Product, ProductRepository>{
 
+	private static int OFFSET_DATA = 4;
+	
 	public BaseResponse getCode(String code){
 		BaseResponse response = this.setResponse();
 		try{
@@ -28,4 +30,17 @@ public class ProductService extends BaseService<Product, ProductRepository>{
 		return response;
 	}
 	
+	public BaseResponse getBySearch(int categoryId,String name,int start){
+		BaseResponse response = this.setResponse();
+		try{
+			List<Product> listProduct= categoryId == 0 ?
+					this.repo.getSearch(name) : 
+						this.repo.getSearch(categoryId,name);	
+			response.setErrorResponse(false);
+			response.setDataResponse(listProduct);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return response;
+	}
 }

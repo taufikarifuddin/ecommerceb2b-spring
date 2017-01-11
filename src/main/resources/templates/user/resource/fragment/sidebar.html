@@ -7,15 +7,42 @@
 		<div class="col-sm-3" ng-controller="SideBarController">
 			<div class="left-sidebar">
 				<h2>Kategori</h2>
-				<div class="panel-group category-products" id="accordian"><!--category-productsr-->
-					
+				<div class="panel-group category-products" id="accordian">
+					<!--category-productsr-->
 					<div class="panel panel-default" ng-repeat="category in categories">
 						<div class="panel-heading">
-							<h4 class="panel-title"><a href="#">{{ category.name }}</a></h4>
+							<h4 class="panel-title">
+								<a href="" ng-click="categoryClick(category)">{{ category.name }}</a>
+							</h4>
 						</div>
 					</div>
-				</div><!--/category-products-->
-			</div>				
+				</div>
+				<!--/category-products-->
+			</div>
+			
+			<div class="left-sidebar">
+				<h2>Search By</h2>
+				<div class="panel-group category-products" id="accordian">
+					<!--category-productsr-->
+					<table class="table">
+						<tr>
+							<td>Category</td>
+							<td>:</td>
+							<td>{{$parent.categoryChoosen.name}}</td>
+							<td><i style="cursor: pointer;" ng-click="removeSearch('category')" class="fa fa-times"></i></td>
+						</tr>
+						<tr>
+							<td>Name</td>
+							<td>:</td>
+							<td>{{$parent.nameSearch.length > 10 ?  
+							$parent.nameSearch.substring(0,10)+'....' : $parent.nameSearch}}</td>
+							<td><i style="cursor: pointer;" ng-click="removeSearch('name')" class="fa fa-times"></i></td>
+						</tr>
+					</table>
+				</div>
+				<!--/category-products-->
+			</div>
+
 		</div>
 	</div>
 </body>

@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taufik.base.BaseResponse;
@@ -53,7 +54,13 @@ public class ProductRestController implements BaseRestControllerInterface<Produc
 		return service.getAll();
 	}
 	
-
+	@RequestMapping( value = Constant.API_PREFIX+controllerName+"/search")				
+	public BaseResponse getAll(@RequestParam( name = "idCat",defaultValue = "" )int idCat,
+			@RequestParam( name = "name",defaultValue = "" ) String name) {
+		// TODO Auto-generated method stub
+		return service.getBySearch(idCat, name, 0);
+	}
+	
 	@RequestMapping( value = Constant.API_PREFIX+controllerName+"/isExistCode")	
 	public BaseResponse issExistCode(String code){
 		return service.getCode(code);

@@ -89,7 +89,6 @@ app.controller('ProductFormController',function(RestFactory,$scope,$resource){
 		$scope.$parent.submit(data);
 	}
 	
-	
 	$scope.$watch('action',function(newVal,oldVal){
 		$scope.$parent.link = $scope.link;
 		$scope.$parent.action = $scope.action;
@@ -279,6 +278,21 @@ app.controller('SideBarController',function($scope,RestFactory){
 		$scope.categories = response.baseResponse.data;
 	})
 	
+	$scope.categoryClick = function(category){
+		$scope.$parent.categoryChoosen = category;
+	}
+	
+	$scope.removeSearch = function(data){
+		switch(data){
+		case 'category':
+			delete $scope.$parent.categoryChoosen;
+			break;
+		case 'name' :  
+			delete $scope.$parent.nameSearch;
+			break;
+		}
+	}
+	
 })
 
 
@@ -365,10 +379,26 @@ app.controller('LoginUserController',function(LoginFactory,$scope){
 
 app.controller('ProductController',function($scope,ProductService){
 	
+	
 	$scope.listBarang = [];
-	ProductService.getAll(1,function(isSuccess,data){
-		$scope.listBarang = data;
-	});
+	
+	$scope.$watchGroup(['categoryChoosen','nameSearch'],function(newVal,oldVal){
+		$scope.$parent.parentLoader = true;
+		var search = {};
+		search.idCat = typeof newVal[0] == 'undefined' ?
+				0:newVal[0].id;
+		search.name = typeof newVal[1] == 'undefined' ? 
+				'':newVal[1];
+/*		search.offset = offset;
+		search.start = 0;
+	*/			
+		ProductService.getAll(search,function(isSuccess,data){
+			$scope.listBarang = data;
+			$scope.$parent.parentLoader = false;
+		});
+
+
+	})
 	
 })
 
