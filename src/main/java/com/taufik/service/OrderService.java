@@ -121,4 +121,8 @@ public class OrderService extends BaseService<Order,OrderRepository>{
 		return discount;
 	}
 	
+	public BaseResponse changeDataOrder(Order order){
+		return super.save(order);
+	}
+	
 }

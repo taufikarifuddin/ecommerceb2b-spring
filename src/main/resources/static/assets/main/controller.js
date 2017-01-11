@@ -73,6 +73,7 @@ app.controller('PageController',function(ErrorHandlerFactory,DataAttributFactory
  * Product controller
  * product,discount,image dan tag
  * */
+
 app.controller('ProductFormController',function(RestFactory,$scope,$resource){
 	
 	$scope.$parent.isShowLoader = false;
@@ -88,31 +89,6 @@ app.controller('ProductFormController',function(RestFactory,$scope,$resource){
 		$scope.$parent.submit(data);
 	}
 	
-//	$scope.checkCode = function(data){
-////		$scope.$parent.isShowLoader=true;
-//		var resource = $resource("",{},{
-//			'getCode' : {
-//				url : '/api/product/isExistCode',
-//                method : 'POST',
-//                headers : {
-//                	'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
-//                }
-//			}
-//		});
-//		
-//		resource.getCode({ code : data },{},function(response){
-//			
-//			var data = response.baseResponse.data;
-//			$scope.isValidCode = false;
-//			
-//			if( typeof data === 'boolean' ){
-//				$scope.isValidCode = data;				
-//			}
-////			console.log(data);
-////			$scope.$parent.isShowLoader=false;
-//		})
-//	}
-//	
 	
 	$scope.$watch('action',function(newVal,oldVal){
 		$scope.$parent.link = $scope.link;
@@ -323,6 +299,8 @@ app.controller('RegisterController',function($scope,MemberService,DataAttributFa
 	$scope.isSuccessRegister = false;
 	
 	$scope.submit = function(data){
+		$scope.$parent.parentLoader = true;
+
 		if( $scope.form.error != 'undefined' )
 			DataAttributFactory.remove($scope.form.error);
 		$scope.isLoadingSubmit = true;
@@ -331,9 +309,11 @@ app.controller('RegisterController',function($scope,MemberService,DataAttributFa
 				$scope.form.error = {};				
 				$scope.form.error = data;
 			}else{
+				$scope.form = {};
 				$scope.isSuccessRegister = true;
 			}
 			$scope.isLoadingSubmit = false;
+			$scope.$parent.parentLoader = false;
 		});
 	}
 	
@@ -365,6 +345,8 @@ app.controller('LoginUserController',function(LoginFactory,$scope){
 	$scope.msg = "Silahkan masukkan username dan password";
 	
 	$scope.submit = function(data){
+		$scope.$parent.parentLoader = true;
+
 		LoginFactory.login().user(data,{},function(response){
 			$scope.loginLoading = false;
 			$scope.status = response.error === "true" ? "danger" : "success";
@@ -375,6 +357,7 @@ app.controller('LoginUserController',function(LoginFactory,$scope){
 					window.location.href=response.url;
 				},1000);
 			}
+			$scope.$parent.parentLoader = false;
 		})
 	}
 	
@@ -395,8 +378,12 @@ app.controller('DetailProductController',function($scope,ProductService,CartServ
 
 	$scope.form = {};
 	
-
 	$scope.form.qty = 0;
+	
+	$scope.cart = {
+			type : '',
+			msg : ''
+	};
 	
 	$scope.$watch('id',function(newVal,oldVal){				
 		$scope.form.productId = newVal;		
@@ -429,8 +416,18 @@ app.controller('DetailProductController',function($scope,ProductService,CartServ
 	}
 	
 	$scope.submit = function(form){
+		$scope.$parent.parentLoader = true;
+
 		CartService.update(form,function(isSuccess,data){
-			console.log(data);
+			if( isSuccess ){
+				$scope.form.qty = 0;
+			}
+			
+			$scope.cart.type= isSuccess ? "success" : "danger";
+			$scope.cart.msg= isSuccess ? "Barang berhasil di tambahkan" : 
+				"Barang gagal di tambahkan";
+			
+			$scope.$parent.parentLoader = false;
 		})
 	}
 		
@@ -461,10 +458,12 @@ app.controller('CartController',function($scope,CartService,EVALUATE_DISC){
 	})
 	
 	$scope.remove = function(data){
+		$scope.$parent.parentLoader = true;
 		CartService.remove(data.id,function(isSuccess,data){
 			if( isSuccess ){
 				$scope.data.splice( $scope.data.indexOf(data) , 1 );
 			}
+			$scope.$parent.parentLoader = false;
 		})
 	}
 })
@@ -474,8 +473,71 @@ app.controller('CheckoutFormController',function($scope,OrderService){
 	$scope.date = new Date();
 	$scope.loading = false;
 	$scope.submit = function(alamat){
+		$scope.$parent.parentLoader = true;
 		OrderService.checkout({ address : alamat },function(isSuccess,data){
 			window.location.href = data;
+		})
+	}
+	
+})
+
+app.controller('ProfilController',function($scope,MemberService,DataAttributFactory,MemberAddressService){
+	
+	$scope.reinputpass = $scope.reinputrepass = '';
+	$scope.address = {};
+	$scope.profile = {};
+	
+	$scope.$watchGroup(['reinputpass','reinputrepass'],function(newVal,oldVal){
+		$scope.valid = newVal[0] == newVal[1];
+	})
+		
+	MemberService.getLoggedUser(function(isSuccess,data){
+		if( typeof data.address != 'undefined' && data.address.length > 0){
+			$scope.address = data.address[0];
+			console.log($scope.address);
+			delete data['address'];
+		}
+		
+		$scope.profile = data;
+	});
+	
+	$scope.submitProfile = function(data){
+		
+		if( typeof data === 'undefined' )
+			data = {};
+		
+
+		if( $scope.reinputpass != '' && typeof $scope.reinputpass != 'undefined' )
+			data.password = $scope.reinputpass;			
+		
+
+		$scope.$parent.parentLoader = true;
+		
+		MemberService.update(DataAttributFactory.trim(data),function(isSuccess,data){
+			$scope.profileType = isSuccess ? 'success' : 'danger';
+			$scope.profileMsg = isSuccess ? 'Berhasil memperbaharui' : 'Gagal memperbaharui';			
+			if( !isSuccess ){
+				$scope.profile.error = {};				
+				$scope.profile.error = data;				
+			}
+			$scope.$parent.parentLoader = false;
+		});
+	}
+	
+	$scope.submitAddress = function(data){
+		
+		$scope.$parent.parentLoader = true;
+
+		MemberAddressService.update(data,function(isSuccess,data){
+			$scope.addressType = isSuccess ? 'success' : 'danger';
+			$scope.addressMsg = isSuccess ? 'Berhasil memperbaharui' : 'Gagal memperbaharui';			
+			if( !isSuccess ){
+				$scope.address.error = {};				
+				$scope.address.error = data;
+				console.log(data);
+			}
+			console.log(isSuccess);
+			$scope.$parent.parentLoader = false;
 		})
 	}
 	

@@ -1,5 +1,6 @@
 package com.taufik.service;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.taufik.base.BaseResponse;
@@ -24,6 +25,22 @@ public class MemberService extends BaseService<Member,MemberRepository>{
 				return response;
 			}
 		}
+		return response;
+	}
+	
+	public BaseResponse getByLoggedUser(){
+		BaseResponse response = this.setResponse();
+		
+		try{
+			String email = SecurityContextHolder.getContext().getAuthentication().getName();
+			if( email != null ){
+				Member member = this.repo.findByEmail(email);
+				response.setErrorResponse(false);
+				response.setDataResponse(member);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}		
 		return response;
 	}
 	

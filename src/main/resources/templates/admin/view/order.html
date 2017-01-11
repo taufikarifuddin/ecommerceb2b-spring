@@ -32,9 +32,67 @@
 		</table>
 	</div>
 	<div th:fragment="edit">
-		<table class="table table-bordered"
-			th:attr="ng-init='link=\'order\';action=\'edit\';id=\''+${id}+'\''">
+		<form role="form" ng-submit="submit(form)">
+			<table class="table table-bordered"
+				th:attr="ng-init='link=\'order\';action=\'edit\';id=\''+${id}+'\''">
+				<tr>
+					<td>Id Order</td>
+					<td>:</td>
+					<td>{{ form.id }}</td>
+				</tr>
+				<tr>
+					<td>Tanggal Order</td>
+					<td>:</td>
+					<td>{{ form.orderCreated }}</td>
+				</tr>
+				<tr>
+					<td>Nama Pemesan</td>
+					<td>:</td>
+					<td>{{ form.memberName }}</td>
+				</tr>
+				<tr>
+					<td>Alamat Pengiriman</td>
+					<td>:</td>
+					<td>{{ form.address }}</td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td>:</td>
+					<td><select class="form-control"
+						ng-options="item for item in 
+					['PENDING','DELIVERED','CANCEL']"
+						ng-model="form.statusId">
+
+					</select></td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<table class="table table-bordered text-center">
+							<tr>
+								<td>Nama Barang</td>
+								<td>Jumlah</td>
+								<td>Kode Barang</td>
+								<td>Harga Barang setelah pembelian</td>
+							</tr>
+
+							<tr ng-repeat='detailorder in form.orderItems'>
+								<td><a
+									href="/admin/product/edit/{{ detailorder.productId }}">{{
+										detailorder.productName }}</a></td>
+								<td>{{ detailorder.qty }}</td>
+								<td>{{ detailorder.productCode }}</td>
+								<td>{{ detailorder.finalPrice }}</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="text-right">
+						<input type="submit" value="Simpan" class="btn btn-flat btn-primary" />
+					</td>
+				</tr>
 			</table>
+		</form>
 	</div>
 </body>
 </html>

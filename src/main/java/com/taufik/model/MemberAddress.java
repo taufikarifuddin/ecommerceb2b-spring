@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table( name = "member_address" )
@@ -16,6 +17,7 @@ public class MemberAddress {
 	int id;
 	
 	@Column( name = "member_stress_address_primary" )
+	@NotNull( message = "Alamat utama tidak boleh kosong" )
 	String addressPrimary;
 	
 	@Column( name = "member_street_address" )

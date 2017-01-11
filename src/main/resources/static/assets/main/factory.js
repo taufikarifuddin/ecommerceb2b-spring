@@ -9,6 +9,8 @@ app.value('EVALUATE_DISC',function(total,listDisc,price){
 	for(var i =0; i < listDisc.length; i++){		
 		if( total >= listDisc[i].tracehold ){
 			discount = listDisc[i].discount;
+			console.log(discount);
+		}else{
 			break;
 		};
 	}
@@ -44,9 +46,8 @@ app.config(function($httpProvider){
 //	$httpProvider.interceptors.push('responseObserver');
 })
 
-
 app.factory('RestFactory',function($resource,$http){
-
+	
     var service = {};
 
     var getRestResponse = function(controllerName,prefix){

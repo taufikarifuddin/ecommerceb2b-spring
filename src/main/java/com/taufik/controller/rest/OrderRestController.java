@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taufik.base.BaseResponse;
@@ -50,8 +49,7 @@ public class OrderRestController implements BaseRestControllerInterface<Order>{
 	
 	@RequestMapping( method = RequestMethod.POST, 
 			value = Constant.API_PREFIX +"order"+Constant.UPDATE_POSTFIX)	
-	public BaseResponse update(@RequestParam(name = "id",required = true) int id, 
-			@RequestParam( name = "status",required = true ) String status){		
-		return service.update(id, status);
+	public BaseResponse update(@RequestBody Order data){		
+		return service.changeDataOrder(data);
 	}
 }

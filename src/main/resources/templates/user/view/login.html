@@ -26,7 +26,7 @@
 						<div class="signup-form"><!--sign up form-->
 							<h2>New User Signup!</h2>
 							<div class="alert alert-success" ng-if="isSuccessRegister">
-								Register Berhasil, anda akan login secara otomatis
+								Register Berhasil, Silahkan login
 							</div>
 							<form name="register" ng-submit="submit(form)" role="form">
 								<label class="label label-danger" ng-if="!isValidEmail" >Email telah digunakan</label>																								
@@ -35,6 +35,9 @@
 								<div class="help-block" ng-if="isLoad">
 									<img src="/assets/images/reload.gif" style="height:15px;" class="img img-responsive" />
 								</div>
+								<label class="label label-danger">{{ form.error.name }}</label>																																								
+								<input type="text" ng-model="form.name" placeholder="Masukkan nama anda"/>									
+								
 								<label class="label label-danger">{{ form.error.password }}</label>																																								
 								<input type="password" ng-model="form.password" placeholder="Password"/>									
 								<label class="label label-danger" ng-if="!isValidPassword" >Ulangi password dengan benar</label>																	

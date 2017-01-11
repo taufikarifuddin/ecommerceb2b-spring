@@ -1,9 +1,12 @@
 package com.taufik.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,8 +33,19 @@ public class Order {
 	@Column( name = "alamat_pengiriman" )
 	String address;
 	
+	@OneToMany( mappedBy = "orderId" )
+	List<OrderItem> orderItems;
+	
 	public String getAddress() {
 		return address;
+	}
+	
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+	
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
 	}
 
 	public Order(int id, int memberId, OrderStatus statusId, String orderCreated, String memberName, String address) {

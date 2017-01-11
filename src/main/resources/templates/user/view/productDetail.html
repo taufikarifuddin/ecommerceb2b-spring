@@ -35,6 +35,11 @@
 
 					</div>
 					<div class="col-sm-7">
+						<div ng-if="cart.type" class="alert alert-{{ cart.type }} col-md-12">
+							{{ cart.msg }}
+						</div>
+					</div>					
+					<div class="col-sm-7">
 						<div class="product-information"><!--/product-information-->
 							<h2>{{ data.name }}</h2>
 							<p>Kode Barang: {{ data.code }}</p>

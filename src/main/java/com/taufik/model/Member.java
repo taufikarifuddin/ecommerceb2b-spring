@@ -1,9 +1,12 @@
 package com.taufik.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -22,6 +25,7 @@ public class Member {
 	int genderID;
 	
 	@Column( name = "member_name" )
+	@NotNull( message = "Nama tidak boleh kosong" )
 	String name;
 	
 	@Column( name = "member_email_address" )
@@ -52,7 +56,18 @@ public class Member {
 	
 	@Column( name = "member_rolemember_role_id",columnDefinition = "default '"+Constant.USER_STATUS+"'" )	
 	int roleId;
-
+	
+	@OneToMany( mappedBy = "memberId" )
+	List<MemberAddress> address;
+	
+	public void setAddress(List<MemberAddress> address) {
+		this.address = address;
+	}
+	
+	public List<MemberAddress> getAddress() {
+		return address;
+	}
+	
 	public Member(int id, int genderID, String name, String email, String contact, String contact2, String password,
 			boolean isActive, String lastLogin, String dateCreated, String lastModificationDate, int roleId) {
 		super();

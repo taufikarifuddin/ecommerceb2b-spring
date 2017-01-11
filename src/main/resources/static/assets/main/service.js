@@ -10,9 +10,16 @@ app.service('MemberService', function($resource, RestFactory,
 			headers : {
 				'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
 			}
+		},
+		'getLoggedUser' : {
+			url : '/user/api/'+controllerName+'/get',
+			method : 'POST',
+			headers : {
+				'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
+			}
 		}
 	})
-
+	
 	return {
 
 		checkEmail : function(email, fn) {
@@ -23,7 +30,14 @@ app.service('MemberService', function($resource, RestFactory,
 				fn(resource.baseResponse.data);
 			})
 		},
-
+		getLoggedUser : function(fn){
+			customResource.getLoggedUser({}, {}, function(response) {
+				ErrorHandlerFactory.responseHandler(response, function(
+						isSuccess, data) {
+					fn(isSuccess, data);
+				})
+			})		
+		},
 		update : function(data, fn) {
 			RestFactory.rest("member").update(
 					{},
@@ -39,6 +53,24 @@ app.service('MemberService', function($resource, RestFactory,
 	};
 
 })
+
+app.service('MemberAddressService', function($resource, RestFactory,
+		DataAttributFactory, ErrorHandlerFactory,USER_API_PREFIX) {
+	
+	var controllerName = "memberAddress";
+	
+	return {
+		update : function(data,fn){
+			RestFactory.rest(controllerName,USER_API_PREFIX).update({},DataAttributFactory.trim(data),function(response){
+				console.log(response);
+				ErrorHandlerFactory
+				.defaultResponseHandler(response, fn);
+			})
+		}
+	}
+	
+})
+
 
 app.service('ProductService', function($resource, RestFactory,
 		DataAttributFactory, ErrorHandlerFactory) {
