@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+<head>
+</head>
+	<body th:fragment="pageFragment">	
+	<section ng-controller="OrderHistoryController">
+			<section id="cart_items">		
+				<div class="container">	
+					<div class="table-responsive cart_info">
+						<table class="table table-condensed">
+							<thead>
+								<tr class="cart_menu">
+									<td class="image">Item</td>
+									<td class="description">Tanggal Pemesanan</td>
+									<td class="quantity">Status</td>
+									<td class="price">Total Harga</td>
+								</tr>
+							</thead>
+							<tbody class="text-center">								
+								<tr>
+									<td>
+										<table class="table table-bordered">
+											<tr>
+												<td>Buku</td>
+												<td>1pc</td>												
+											</tr>
+										</table>
+									</td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>
+										<table class="table table-bordered">
+											<tr>
+												<td>Buku</td>
+												<td>1pc</td>												
+											</tr>
+										</table>
+									</td>
+									<td></td>
+									<td></td>
+									<td></td>									
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</section>
+		</section>
+	</body>
+</html>

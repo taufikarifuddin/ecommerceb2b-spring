@@ -52,4 +52,10 @@ public class OrderRestController implements BaseRestControllerInterface<Order>{
 	public BaseResponse update(@RequestBody Order data){		
 		return service.changeDataOrder(data);
 	}
+	
+	@RequestMapping( method = RequestMethod.GET, 
+			value = Constant.API_USER_PREFIX+"order/history")		
+	public BaseResponse getMemberOrder(){
+		return service.getUserOrder();
+	}
 }

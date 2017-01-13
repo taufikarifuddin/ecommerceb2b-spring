@@ -125,4 +125,19 @@ public class OrderService extends BaseService<Order,OrderRepository>{
 		return super.save(order);
 	}
 	
+	public BaseResponse getUserOrder(){
+		BaseResponse response = this.setResponse();
+		try{
+		Member member = this.memberRepo.findByEmail(
+				SecurityContextHolder.getContext().getAuthentication()
+				.getName());
+		this.repo.findByMemberId(member.getId());
+		response.setErrorResponse(false);
+		response.setDataResponse(response);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return response;		
+	}
+	
 }

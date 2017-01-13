@@ -572,3 +572,9 @@ app.controller('ProfilController',function($scope,MemberService,DataAttributFact
 	}
 	
 })
+
+app.controller('OrderHistoryController',function($scope,OrderService){
+/*	OrderService.getOrder(function(isSuccess,data){
+		console.log(data);
+	})*/
+})

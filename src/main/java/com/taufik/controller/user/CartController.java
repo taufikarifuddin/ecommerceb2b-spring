@@ -20,4 +20,10 @@ public class CartController {
 		PageAttribute.setAttribut(model,"checkOut","Check Out");		
 		return "user/index";		
 	}
+	
+	@RequestMapping( value = "/user/historyOrder" )
+	public String orderHistory(Model model){
+		PageAttribute.setAttribut(model,"historyOrder","Check Out");				
+		return "user/index";
+	}
 }	

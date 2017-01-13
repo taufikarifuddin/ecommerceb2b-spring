@@ -158,8 +158,16 @@ app.service('OrderService', function($resource, RestFactory,
 			method : 'POST',
 			headers : {
 				'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
-			}
+			},
+		},
+		'getOrder' : {
+			url : '/user/api/'+controllerName+'/history',
+			method : 'GET',
+			headers : {
+				'X-CSRF-TOKEN' : $('meta[name="_csrf"]').attr('content')
+			},			
 		}
+
 	})
 
 	return {		
@@ -170,6 +178,14 @@ app.service('OrderService', function($resource, RestFactory,
 					fn(isSuccess, data);
 				})
 			})			
+		},
+		getOrder : function(fn){
+			customResource.getOrder({},{},function(response){
+				ErrorHandlerFactory.responseHandler(response, function(
+						isSuccess, data) {
+					fn(isSuccess, data);
+				})				
+			});
 		},
 		updateStatus : function(data,fn){
 			RestFactory.rest(controllerName).update(data,{},function(response){
