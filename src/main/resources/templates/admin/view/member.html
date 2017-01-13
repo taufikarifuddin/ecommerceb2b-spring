@@ -1,0 +1,62 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div th:fragment="index">
+		<a href="/admin/{{link}}/add" class="btn btn-flat btn-primary"
+			id="add-btn"> <i class="fa fa-plus"></i> Tambah Data
+		</a>
+
+		<table id="table-content" class="text-center table table-stripped"
+			ng-init="link='member';action='getAll'">
+			<thead>
+				<th>Email</th>
+				<th>Nama</th>
+				<th>Kontak</th>
+				<th>Aksi</th>
+			</thead>
+			<tbody>
+				<tr repeat-end="onEndRepeat()" ng-repeat="detail in data">
+					<td>{{ detail.email }}</td>
+					<td>{{ detail.name }}</td>
+					<td>{{ detail.contact }}</td>
+					<td>
+					<a href="/admin/member/edit/{{detail.id}}" class="btn btn-flat btn-warning">
+						<i class="fa fa-eye"></i>
+					</a>&nbsp;
+					<a href="/admin/member/remove/{{detail.id}}"
+						class="btn btn-flat btn-danger"> <i class="fa fa-remove"></i>
+					</a>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<th>Email</th>
+				<th>Nama</th>
+				<th>Kontak</th>
+				<th>Aksi</th>
+			</tfoot>
+		</table>
+	</div>
+	<div th:fragment="edit">
+		<div class="table table-bordered"
+				th:attr="ng-init='link=\'member\';action=\'edit\';id=\''+${id}+'\''">
+				<div th:include="/admin/view/form::${controllerName}"></div>			
+				
+		</div>
+	</div>
+
+	<div th:fragment="remove">
+		<div class="table table-bordered"
+				th:attr="ng-init='link=\'member\';action=\'remove\';id=\''+${id}+'\''">
+				<div th:include="/admin/view/form::${controllerName}"></div>							
+				<div class="col-md-12">
+					<button class="btn btn-flat btn-danger" ng-click="remove()">
+						Hapus
+					</button>
+				</div>
+		</div>
+	</div>
+
+</body>
+</html>

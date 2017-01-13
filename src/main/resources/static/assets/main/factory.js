@@ -18,7 +18,6 @@ app.value('EVALUATE_DISC',function(total,listDisc,price){
 });
 
 app.factory('responseObserver', function responseObserver($q, $window) {
-	console.log('called');
     return {
         'responseError': function(errorResponse) {
         	console.log(errorResponse);

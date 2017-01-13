@@ -487,11 +487,14 @@ app.controller('CartController',function($scope,CartService,EVALUATE_DISC){
 		}
 	})
 	
-	$scope.remove = function(data){
+	$scope.remove = function(dataDetail){
+
 		$scope.$parent.parentLoader = true;
-		CartService.remove(data.id,function(isSuccess,data){
-			if( isSuccess ){
-				$scope.data.splice( $scope.data.indexOf(data) , 1 );
+		CartService.remove(dataDetail.id,function(isSuccess,data){
+			if( isSuccess ){				
+				$scope.total = $scope.total - dataDetail.total;
+				console.log(dataDetail.total);
+				$scope.data.splice( $scope.data.indexOf(dataDetail) , 1 );
 			}
 			$scope.$parent.parentLoader = false;
 		})
@@ -502,10 +505,17 @@ app.controller('CheckoutFormController',function($scope,OrderService){
 	
 	$scope.date = new Date();
 	$scope.loading = false;
+	
 	$scope.submit = function(alamat){
 		$scope.$parent.parentLoader = true;
-		OrderService.checkout({ address : alamat },function(isSuccess,data){
-			window.location.href = data;
+		OrderService.checkout({ address : alamat },function(isSuccess,data){	
+			$scope.$parent.alreadyCheckout = true;
+			if( isSuccess && data == true ){
+				$scope.$parent.statusCheckout = true;
+			}
+			else{
+				$scope.$parent.statusCheckout = false;				
+			}
 		})
 	}
 	
@@ -573,8 +583,14 @@ app.controller('ProfilController',function($scope,MemberService,DataAttributFact
 	
 })
 
-app.controller('OrderHistoryController',function($scope,OrderService){
-/*	OrderService.getOrder(function(isSuccess,data){
-		console.log(data);
-	})*/
+app.controller('OrderHistoryController',function($scope,OrderService){	
+	OrderService.getOrder(function(isSuccess,data){		
+		$scope.listData = data;
+		for( var i = 0; i < $scope.listData.length; i++ ){
+			$scope.listData[i].total = 0;
+			for( var j = 0; j < $scope.listData[i].orderItems.length; j++ ){
+				$scope.listData[i].total += $scope.listData[i].orderItems[j].finalPrice;
+			}
+		}
+	})
 })

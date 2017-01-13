@@ -93,9 +93,10 @@ public class OrderService extends BaseService<Order,OrderRepository>{
 			}
 			cartRepository.deleteAllUserCart(member.getId());
 			response.setErrorResponse(false);			
-			response.setDataResponse("/user/cart/checkout/success");
+			response.setDataResponse(true);
 		}catch (Exception e) {
 			e.printStackTrace();
+			response.setErrorResponse(true);			
 			response.setMessageResponse("Error dalam penyimpanan aksi CheckOut dibatalkan");			
 			this.repo.delete(data.getId());
 			return response;
@@ -131,9 +132,9 @@ public class OrderService extends BaseService<Order,OrderRepository>{
 		Member member = this.memberRepo.findByEmail(
 				SecurityContextHolder.getContext().getAuthentication()
 				.getName());
-		this.repo.findByMemberId(member.getId());
+		List<Order> order = this.repo.findByMemberId(member.getId());
 		response.setErrorResponse(false);
-		response.setDataResponse(response);
+		response.setDataResponse(order);
 		}catch (Exception e) {
 			// TODO: handle exception
 		}

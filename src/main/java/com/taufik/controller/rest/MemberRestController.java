@@ -34,7 +34,8 @@ public class MemberRestController implements BaseRestControllerInterface<Member>
 	}
 
 	@Override
-	public BaseResponse delete(int id) {
+	@RequestMapping( value = Constant.API_PREFIX+MemberService.CONTROLLER_NAME+Constant.REMOVE_POSTFIX,method = RequestMethod.POST )		
+	public BaseResponse delete( int id) {
 		// TODO Auto-generated method stub
 		return this.service.remove(id);
 	}
@@ -45,12 +46,14 @@ public class MemberRestController implements BaseRestControllerInterface<Member>
 	}
 	
 	@Override
+	@RequestMapping( value = Constant.API_PREFIX+MemberService.CONTROLLER_NAME+Constant.GET_POSTFIX)		
 	public BaseResponse get(int id) {
 		// TODO Auto-generated method stub
 		return service.getById(id);
 	}
 
 	@Override
+	@RequestMapping( value = Constant.API_PREFIX+MemberService.CONTROLLER_NAME+Constant.GET_ALL_POSTFIX)	
 	public BaseResponse getAll() {
 		// TODO Auto-generated method stub
 		return service.getAll();

@@ -18,33 +18,30 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 									<td class="price">Total Harga</td>
 								</tr>
 							</thead>
-							<tbody class="text-center">								
-								<tr>
+							<tbody class="text-center">									
+								<tr ng-repeat="detail in listData">
 									<td>
 										<table class="table table-bordered">
-											<tr>
-												<td>Buku</td>
-												<td>1pc</td>												
+											<tr ng-repeat="detailItem in detail.orderItems">
+												<td>
+													{{ detailItem.productName }}
+												</td>
+												<td>
+													{{ detailItem.qty }} pcs
+												</td>												
 											</tr>
 										</table>
 									</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
 									<td>
-										<table class="table table-bordered">
-											<tr>
-												<td>Buku</td>
-												<td>1pc</td>												
-											</tr>
-										</table>
+										{{ detail.orderCreated }}
 									</td>
-									<td></td>
-									<td></td>
-									<td></td>									
-								</tr>
+									<td>
+										{{ detail.statusId }}
+									</td>
+									<td>
+										{{ detail.total }}
+									</td>
+								</tr>								
 							</tbody>
 						</table>
 					</div>

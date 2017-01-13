@@ -1,94 +1,149 @@
 <html xmlns:th="http://www.thymeleaf.org/">
-	<head>
-	</head>
-	<body>		
-		<div th:fragment="productCategory">
-			<div class="form-group">
-				<label>Nama Kategori</label>
-				<label class="label label-danger">{{ error.name }}</label>
-				<input type="hidden" class="form-control" ng-model="form.id" />				
-				<input type="text" class="form-control" ng-model="form.name" />
-			</div>
-			<div class="form-group">
-				<label>Icon Kategori ( <i class="fa fa-{{form.icon}}"></i> )</label>
-				<label class="label label-danger">{{ error.icon }}</label>				
-				<input type="text" class="form-control" ng-model="form.icon" />
-			</div>
-			<div class="form-group">
-				<label>Deskripsi</label>
-				<label class="label label-danger">{{ error.desc }}</label>								
-				<textarea class="form-control" ng-model="form.desc"></textarea>
-			</div>
-			<div class="form-group">
-				<input type="submit" class="btn btn-flat btn-success" value="Simpan" /> 
-				<input type="reset" class="btn btn-flat btn-danger" value="Reset" />				
-			</div>			
-		</div>		
-		<div th:fragment="product">
-			<div class="form-group">
-				<label>Nama Produk</label>
-				<label class="label label-danger">{{ error.name }}</label>
-				<input type="hidden" class="form-control" ng-model="form.id" />				
-				<input type="text" class="form-control" ng-model="form.name" />
-			</div>
-			<div class="form-group">
-				<label>Kode Produk</label>
-				<label class="label label-danger">{{ error.code }}</label>
-				<input ng-keydown="checkCode(form.code)" type="text" class="form-control" ng-model="form.code" />
-			</div>
-			<div class="form-group">
-				<label>Kategori Produk</label>
-				<select class="form-control" ng-model="form.categoryId"
-					ng-options="productCategory.id as productCategory.name for productCategory in productCategory track by productCategory.id"
-				></select>
-			</div>
-			<div class="form-group">
-				<label>Harga</label>
-				<label class="label label-danger">{{ error.price }}</label>
-				<input type="text" class="form-control" ng-model="form.price" />
-			</div>			
-			<div class="form-group">
-				<label>Deskripsi</label>
-				<label class="label label-danger">{{ error.desc }}</label>
-				<textarea class="form-control" ng-model="form.desc"></textarea>
-			</div>
-			<div class="form-group">
-				<label>Tampilkan Produk</label>
-				<input type="checkbox" ng-value="'0'" class="checkbox"  ng-checked="form.isVisible" ng-model="checkbox" />
-			</div>
-			<div class="form-group">
-				<input type="submit" ng-init="isValidCode='true'" ng-disabled="!isValidCode" class="btn btn-flat btn-success" value="Simpan" /> 
-				<input type="reset" class="btn btn-flat btn-danger" value="Reset" />				
-			</div>
+<head>
+</head>
+<body>
+	<div th:fragment="productCategory">
+		<div class="form-group">
+			<label>Nama Kategori</label> <label class="label label-danger">{{
+				error.name }}</label> <input type="hidden" class="form-control"
+				ng-model="form.id" /> <input type="text" class="form-control"
+				ng-model="form.name" />
 		</div>
-		<div th:fragment="banner">
-			<div class="form-group">
-				<label>Judul Banner</label>
-				<label class="label label-danger">{{ error.title }}</label>							
-				<input type="text" class="form-control" ng-model="form.title" />
-			</div>
-			<div class="form-group">
-				<label>Gambar</label>
-				<label class="label label-danger" ng-if="!isValidExt">
-					Gambar harus memiliki ekstensi {{ allowExt.join(',') }}
-				</label>				
-				<label class="label label-danger">{{ error.image }}</label>							
-				<input type="file" class="form-control" upload-file="" file-model="bannerImage" />
-			</div>			
-			<div class="form-group">
-				<label>Urutan</label>
-				<label class="label label-danger">{{ error.order }}</label>							
-				<input type="number" min="0" class="form-control" ng-model="form.order" />
-			</div>			
-			<div class="form-group">
-				<label>Deskripsi</label>
-				<label class="label label-danger">{{ error.desc }}</label>											
-				<textarea class="form-control" ng-model="form.desc"></textarea>
-			</div>
-			<div class="form-group">
-				<input type="submit" ng-init="isValidCode='true'" ng-disabled="!isValidCode" class="btn btn-flat btn-success" value="Simpan" /> 
-				<input type="reset" class="btn btn-flat btn-danger" value="Reset" />				
-			</div>
+		<div class="form-group">
+			<label>Icon Kategori ( <i class="fa fa-{{form.icon}}"></i> )
+			</label> <label class="label label-danger">{{ error.icon }}</label> <input
+				type="text" class="form-control" ng-model="form.icon" />
 		</div>
-	</body>
+		<div class="form-group">
+			<label>Deskripsi</label> <label class="label label-danger">{{
+				error.desc }}</label>
+			<textarea class="form-control" ng-model="form.desc"></textarea>
+		</div>
+		<div class="form-group">
+			<input type="submit" class="btn btn-flat btn-success" value="Simpan" />
+			<input type="reset" class="btn btn-flat btn-danger" value="Reset" />
+		</div>
+	</div>
+	<div th:fragment="product">
+		<div class="form-group">
+			<label>Nama Produk</label> <label class="label label-danger">{{
+				error.name }}</label> <input type="hidden" class="form-control"
+				ng-model="form.id" /> <input type="text" class="form-control"
+				ng-model="form.name" />
+		</div>
+		<div class="form-group">
+			<label>Kode Produk</label> <label class="label label-danger">{{
+				error.code }}</label> <input ng-keydown="checkCode(form.code)" type="text"
+				class="form-control" ng-model="form.code" />
+		</div>
+		<div class="form-group">
+			<label>Kategori Produk</label> <select class="form-control"
+				ng-model="form.categoryId"
+				ng-options="productCategory.id as productCategory.name for productCategory in productCategory track by productCategory.id"></select>
+		</div>
+		<div class="form-group">
+			<label>Harga</label> <label class="label label-danger">{{
+				error.price }}</label> <input type="text" class="form-control"
+				ng-model="form.price" />
+		</div>
+		<div class="form-group">
+			<label>Deskripsi</label> <label class="label label-danger">{{
+				error.desc }}</label>
+			<textarea class="form-control" ng-model="form.desc"></textarea>
+		</div>
+		<div class="form-group">
+			<label>Tampilkan Produk</label> <input type="checkbox" ng-value="'0'"
+				class="checkbox" ng-checked="form.isVisible" ng-model="checkbox" />
+		</div>
+		<div class="form-group">
+			<input type="submit" ng-init="isValidCode='true'"
+				ng-disabled="!isValidCode" class="btn btn-flat btn-success"
+				value="Simpan" /> <input type="reset"
+				class="btn btn-flat btn-danger" value="Reset" />
+		</div>
+	</div>
+	<div th:fragment="banner">
+		<div class="form-group">
+			<label>Judul Banner</label> <label class="label label-danger">{{
+				error.title }}</label> <input type="text" class="form-control"
+				ng-model="form.title" />
+		</div>
+		<div class="form-group">
+			<label>Gambar</label> <label class="label label-danger"
+				ng-if="!isValidExt"> Gambar harus memiliki ekstensi {{
+				allowExt.join(',') }} </label> <label class="label label-danger">{{
+				error.image }}</label> <input type="file" class="form-control"
+				upload-file="" file-model="bannerImage" />
+		</div>
+		<div class="form-group">
+			<label>Urutan</label> <label class="label label-danger">{{
+				error.order }}</label> <input type="number" min="0" class="form-control"
+				ng-model="form.order" />
+		</div>
+		<div class="form-group">
+			<label>Deskripsi</label> <label class="label label-danger">{{
+				error.desc }}</label>
+			<textarea class="form-control" ng-model="form.desc"></textarea>
+		</div>
+		<div class="form-group">
+			<input type="submit" ng-init="isValidCode='true'"
+				ng-disabled="!isValidCode" class="btn btn-flat btn-success"
+				value="Simpan" /> <input type="reset"
+				class="btn btn-flat btn-danger" value="Reset" />
+		</div>
+	</div>
+	<div th:fragment="member">
+		<table class="table table-bordered">
+			<tr>
+				<td>Email</td>
+				<td>:</td>
+				<td>{{ form.email }}</td>
+			</tr>
+			<tr>
+				<td>Nama</td>
+				<td>:</td>
+				<td>{{ form.name }}</td>
+			</tr>
+			<tr>
+				<td>Nama</td>
+				<td>:</td>
+				<td>{{ form.name }}</td>
+			</tr>
+			<tr>
+				<td>Kontak 1</td>
+				<td>:</td>
+				<td>{{ form.contact }}</td>
+			</tr>
+			<tr>
+				<td>Kontak 2</td>
+				<td>:</td>
+				<td>{{ form.contact2 }}</td>
+			</tr>
+			<tr>
+				<td>Kontak 1</td>
+				<td>:</td>
+				<td>{{ form.contact }}</td>
+			</tr>
+			<tr>
+				<td>Kontak 1</td>
+				<td>:</td>
+				<td>{{ form.contact }}</td>
+			</tr>
+			<tr>
+				<td>Alamat Utama</td>
+				<td>:</td>
+				<td>
+					{{ form.address.addressPrimary}}	
+				</td>
+			</tr>			
+			<tr>
+				<td>Alamat 2</td>
+				<td>:</td>
+				<td>
+					{{ form.address.address}}	
+				</td>
+			</tr>						
+		</table>
+	</div>
+</body>
 </html>
