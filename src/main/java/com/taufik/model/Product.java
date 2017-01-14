@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -61,6 +62,7 @@ public class Product {
 	Set<ProductImage> images;
 	
 	@OneToMany( mappedBy = "productId" )
+	@OrderBy(value = "tracehold")
 	Set<ProductDiscount> discounts;	
 	
 	@ManyToOne( cascade = CascadeType.ALL )

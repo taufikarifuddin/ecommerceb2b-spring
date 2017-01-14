@@ -8,6 +8,6 @@ import com.taufik.model.ProductDiscount;
 
 public interface ProductDiscountRepository extends JpaRepository<ProductDiscount, Integer>{
 
-	public List<ProductDiscount> findByProductId(int id);
+	public List<ProductDiscount> findByProductIdOrderByTraceholdAsc(int id);
 	
 }

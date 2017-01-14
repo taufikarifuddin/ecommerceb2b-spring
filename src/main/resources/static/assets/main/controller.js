@@ -502,7 +502,7 @@ app.controller('CartController',function($scope,CartService,EVALUATE_DISC){
 	}
 })
 
-app.controller('CheckoutFormController',function($scope,OrderService){
+app.controller('CheckoutFormController',function($scope,OrderService,MemberService){
 	
 	$scope.date = new Date();
 	$scope.loading = false;
@@ -523,6 +523,15 @@ app.controller('CheckoutFormController',function($scope,OrderService){
 				$scope.statusCheckout = false;				
 			}
 		})
+	}
+	
+	MemberService.getLoggedUser(function(isSuccess,data){
+		$scope.address = data.address.length > 0 ? data.address[0] :false;
+	})	
+	
+	$scope.useDefaultAddr = function(){
+//		if( $scope.useDefaultAddress )
+		$scope.alamat = $scope.address.address;
 	}
 	
 })

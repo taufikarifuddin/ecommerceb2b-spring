@@ -13,7 +13,7 @@ public class ProductDiscountService extends BaseService<ProductDiscount, Product
 	public BaseResponse getByIdProduct(int id) {
 		BaseResponse response = this.setResponse();
 		try{
-			response.setDataResponse( this.repo.findByProductId(id) );
+			response.setDataResponse( this.repo.findByProductIdOrderByTraceholdAsc(id) );
 			response.setErrorResponse(false);
 		}catch (Exception e) {
 			response.setMessageResponse(e.getMessage());

@@ -4,7 +4,7 @@ app.value('BASE_TEMPLATE',"/assets/main/template")
 app.value('USER_API_PREFIX',"/user");
 app.value('ADMIN_API_PREFIX',"/admin");
 app.value('EVALUATE_DISC',function(total,listDisc,price){	
-	
+	console.log(listDisc);
 	var discount = price;
 	var tempTracehold = 0;
 	for(var i =0; i < listDisc.length; i++){		

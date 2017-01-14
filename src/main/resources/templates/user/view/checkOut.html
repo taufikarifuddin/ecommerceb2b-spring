@@ -36,8 +36,15 @@
 								class="label label-danger" ng-if="!alamat"> Alamat tidak
 								boleh kosong </label>
 							<div class="form-inline">
+								<div class="form-group">
 								<input type="text" placeholder="Alamat anda" ng-model="alamat"
-									class="form-control" /><br />
+									class="form-control" ng-readonly="isUserDefault" />
+								</div><br />
+								<div class="form-group" ng-if="address">
+									<div class="btn btn-primary btn-sm" ng-click="useDefaultAddr()">
+										Ambil Alamat Default
+									</div>
+								</div><br />
 							</div>
 							Phone: (555) 539-1037<br />
 						</address>
@@ -55,7 +62,7 @@
 									<th>Qty</th>
 									<th>Product</th>
 									<th>Description</th>
-									<th>Subtotal</th>
+									<th>Harga Per Pc</th>
 								</tr>
 							</thead>
 							<tbody>
