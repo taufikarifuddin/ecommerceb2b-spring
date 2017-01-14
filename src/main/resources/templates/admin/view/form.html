@@ -39,7 +39,7 @@
 		<div class="form-group">
 			<label>Kategori Produk</label> <select class="form-control"
 				ng-model="form.categoryId"
-				ng-options="productCategory.id as productCategory.name for productCategory in productCategory track by productCategory.id"></select>
+				ng-options="productCategory.id as productCategory.name for productCategory in productCategory"></select>
 		</div>
 		<div class="form-group">
 			<label>Harga</label> <label class="label label-danger">{{
@@ -52,8 +52,10 @@
 			<textarea class="form-control" ng-model="form.desc"></textarea>
 		</div>
 		<div class="form-group">
-			<label>Tampilkan Produk</label> <input type="checkbox" ng-value="'0'"
-				class="checkbox" ng-checked="form.isVisible" ng-model="checkbox" />
+			<label>Tampilkan Produk</label> <input type="checkbox" 
+			ng-true-value="1"
+			ng-false-value="0"			
+				class="checkbox" ng-checked="form.isVisible" ng-model="form.isVisible" />
 		</div>
 		<div class="form-group">
 			<input type="submit" ng-init="isValidCode='true'"

@@ -3,6 +3,7 @@ package com.taufik.controller.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taufik.base.BaseResponse;
@@ -18,7 +19,7 @@ public class MemberAddressRestController implements BaseRestControllerInterface<
 	
 	@Override
 	@PostMapping( MemberAddressService.API_ROUTE+"/update" )
-	public BaseResponse update(MemberAddress data, BindingResult bindingResult) {
+	public BaseResponse update(@RequestBody MemberAddress data, BindingResult bindingResult) {
 
 		if( bindingResult.hasErrors() ){
 			return new BaseResponse(bindingResult.getAllErrors(), true);

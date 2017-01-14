@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.taufik.other.Constant;
 
 @Entity
@@ -42,7 +44,7 @@ public class Member {
 	@NotNull( message = "Password tidak boleh kosong" )
 	String password;
 	
-	@Column( name = "member_is_active",columnDefinition = "default '1'" )
+	@Column( name = "member_is_active")
 	boolean isActive;
 	
 	@Column(name = "member_last_login")
@@ -54,10 +56,10 @@ public class Member {
 	@Column( name = "member_account_modified" )
 	String lastModificationDate;
 	
-	@Column( name = "member_rolemember_role_id",columnDefinition = "default '"+Constant.USER_STATUS+"'" )	
-	int roleId;
+	@Column( name = "member_rolemember_role_id",columnDefinition = "int(10) default "+Constant.USER_STATUS+"" )	
+	int roleId = Constant.USER_STATUS;
 	
-	@OneToMany( mappedBy = "memberId" )
+	@OneToMany( mappedBy = "memberId")
 	List<MemberAddress> address;
 	
 	public void setAddress(List<MemberAddress> address) {

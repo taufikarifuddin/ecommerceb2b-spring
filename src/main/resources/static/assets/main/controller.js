@@ -426,16 +426,18 @@ app.controller('DetailProductController',function($scope,ProductService,CartServ
 		
 	})
 	
-	$scope.$watch('form.qty',function(newVal,oldVal){
-		if( typeof newVal !== 0 && typeof $scope.data !== 'undefined'){
-			if( newVal < 0 || typeof newVal == 'undefined' || typeof newVal =='string' ){
+	$scope.$watch('form.qty',function(newVal,oldVal){		
+		if( typeof newVal !== 0 
+				&& typeof $scope.data !== 'undefined'){
+			if( newVal < 0 || typeof newVal == 'undefined' || typeof newVal =='string' 
+				|| typeof newVal === 'undefined' ){
 				$scope.jumlah  = 0;
 			}
-			console.log(newVal);
 			$scope.totalPembelian = EVALUATE_DISC(newVal,$scope.discount,$scope.data.price) * newVal;
-		}else
+		}else{
+//			alert('called');
 			$scope.totalPembelian = 0;
-		
+		}
 	})
 	
 	$scope.getTotalImageContinaer = function(totalElem){
@@ -447,7 +449,6 @@ app.controller('DetailProductController',function($scope,ProductService,CartServ
 	
 	$scope.submit = function(form){
 		$scope.$parent.parentLoader = true;
-
 		CartService.update(form,function(isSuccess,data){
 			if( isSuccess ){
 				$scope.form.qty = 0;
@@ -506,15 +507,20 @@ app.controller('CheckoutFormController',function($scope,OrderService){
 	$scope.date = new Date();
 	$scope.loading = false;
 	
+	$scope.alreadyCheckout=false;
+	
+	$scope.$parent.parentLoader = true;	
 	$scope.submit = function(alamat){
 		$scope.$parent.parentLoader = true;
 		OrderService.checkout({ address : alamat },function(isSuccess,data){	
-			$scope.$parent.alreadyCheckout = true;
+			$scope.alreadyCheckout = true;			
+			$scope.$parent.parentLoader = false;
+			
 			if( isSuccess && data == true ){
-				$scope.$parent.statusCheckout = true;
+				$scope.statusCheckout = true;
 			}
 			else{
-				$scope.$parent.statusCheckout = false;				
+				$scope.statusCheckout = false;				
 			}
 		})
 	}

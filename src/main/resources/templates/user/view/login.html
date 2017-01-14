@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 </head>
 	<body th:fragment="pageFragment">		
-		<section id="form" style="margin:20px 0px 50px 0px;"><!--form-->
+		<section sec:authorize="!isAuthenticated()" id="form" style="margin:20px 0px 50px 0px;"><!--form-->
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-4 col-sm-offset-1">
@@ -50,5 +51,12 @@
 				</div>
 			</div>
 		</section><!--/form-->		
+		<section sec:authorize="isAuthenticated()" >
+			<div class="col-md-12">
+				<div class="alert alert-success">
+					Anda Sudah login, klik <a href="/">Disini</a> untuk melihat barang
+				</div>
+			</div>
+		</section>
 	</body>
 </html>

@@ -1,53 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 </head>
-	<body th:fragment="pageFragment">		
-		<div class="container" style="margin-bottom:10px;" ng-controller="ProfilController">		
-			<div class="row">
-				<div class="col-sm-4 col-sm-offset-1">
-					<div class="profile-form">
-						<h2> Data Pengguna </h2>
-						<form role="form" ng-submit="submitProfile(profile)">	
-							<div class="alert alert-{{profileType}}" ng-if="profileType">{{profileMsg}}</div>
-							<label>Nama</label>
-							<label class="label label-danger">{{ profile.error.name }}</label>	
-							<input type="text" ng-model="profile.name" placeholder="Nama" />
-							<input type="hidden" ng-model="profile.email" />							
-							<label>Kontak 1</label>							
-							<label class="label label-danger">{{ profile.error.contact }}</label>								
-							<input type="text" ng-model="profile.contact" placeholder="Kontak 1" />
-							<label>Kontak 2</label>							
-							<label class="label label-danger">{{ profile.error.contact }}</label>								
-							<input type="text" ng-model="profile.contact2" placeholder="Kontak 2" />							
-							<label>Password</label>
-							<span class="label label-warning">Isi field password untuk mengganti password</span>
-							<span ng-if="!valid" class="label label-danger">password tidak sama dengan konfirmasi password</span>
-							<input type="password" ng-model="reinputpass" placeholder="Password" />
-							<input type="password" ng-model="reinputrepass" placeholder="Re-passord" />							
-							<button type="submit" ng-if="valid" class="btn btn-default btn-flat">Simpan</button>
-						</form>
-					</div>
+<body th:fragment="pageFragment">
+	<div class="container" style="margin-bottom: 10px;"
+		ng-controller="ProfilController">
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-1">
+				<div class="profile-form">
+					<h2>Data Pengguna</h2>
+					<form role="form" ng-submit="submitProfile(profile)">
+						<div class="alert alert-{{profileType}}" ng-if="profileType">{{profileMsg}}</div>
+						<label>Nama</label> <label class="label label-danger">{{
+							profile.error.name }}</label> <input type="text" ng-model="profile.name"
+							placeholder="Nama" /> <input type="hidden"
+							ng-model="profile.email" /> <label>Kontak 1</label> <label
+							class="label label-danger">{{ profile.error.contact }}</label> <input
+							type="text" ng-model="profile.contact" placeholder="Kontak 1" />
+						<label>Kontak 2</label> <label class="label label-danger">{{
+							profile.error.contact }}</label> <input type="text"
+							ng-model="profile.contact2" placeholder="Kontak 2" /> <label>Password</label>
+						<span class="label label-warning">Isi field password untuk
+							mengganti password</span> <span ng-if="!valid"
+							class="label label-danger">password tidak sama dengan
+							konfirmasi password</span> <input type="password" ng-model="reinputpass"
+							placeholder="Password" /> <input type="password"
+							ng-model="reinputrepass" placeholder="Re-passord" />
+						<button type="submit" ng-if="valid"
+							class="btn btn-default btn-flat">Simpan</button>
+					</form>
 				</div>
-				<div class="col-sm-4 col-sm-offset-1">
-					<div class="profile-form">
-						<h2> Alamat Pengguna</h2>									
-						<div class="alert alert-{{addressType}}" ng-if="addressType">{{addressMsg}}</div>						
-						<form role="form" ng-submit="submitAddress(address)">			
-							<label>Alamat utama</label>												
-							<label class="label label-danger">{{ address.error.addressPrimary }}</label>			
-							<input type="text" ng-model="address.addressPrimary" placeholder="Alamat" />			
-							<label>Alamat utama</label>							
-							<label class="label label-danger">{{ address.error.address }}</label>										
-							<input type="text" ng-model="address.address" placeholder="Alamat 2" />										
-							<label>Kode pos</label>							
-							<label class="label label-danger">{{ address.error.postCode }}</label>										
-							<input type="text" ng-model="address.postCode" placeholder="Kode pos" />																	
-							<button type="submit" class="btn btn-default btn-flat">Simpan</button>
-						</form>
-					</div>		
-				</div>		
-			</div>				
+			</div>
+			<div class="col-sm-4 col-sm-offset-1">
+				<div class="profile-form">
+					<h2>Alamat Pengguna</h2>
+					<div class="alert alert-{{addressType}}" ng-if="addressType">{{addressMsg}}</div>
+					<form role="form" ng-submit="submitAddress(address)">
+						<label>Alamat</label> <label class="label label-danger">{{
+							address.error.address }}</label> <input type="text"
+							ng-model="address.address" placeholder="Alamat" /> <label>Kode
+							pos</label> <label class="label label-danger">{{
+							address.error.postCode }}</label> <input 
+							type="number"
+							string-to-number=""
+							ng-model="address.postCode" placeholder="Kode pos" />
+						<button type="submit" class="btn btn-default btn-flat">Simpan</button>
+					</form>
+				</div>
+			</div>
 		</div>
-	</body>
+	</div>
+</body>
 </html>

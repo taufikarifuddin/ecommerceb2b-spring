@@ -1,5 +1,7 @@
 package com.taufik.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -62,7 +64,13 @@ public class OrderService extends BaseService<Order,OrderRepository>{
 		try{
 			data.setMemberId(member.getId());
 			data.setMemberName( member.getName() );
-			data.setStatusId( OrderStatus.PENDING );
+			data.setStatusId( OrderStatus.PENDING );			
+			
+			data.setOrderCreated( new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+					.format(new Date()).toString() );
+			
+			System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+			.format(new Date()).toString());
 			this.repo.save(data);
 			
 		}catch (Exception e) {
@@ -89,7 +97,6 @@ public class OrderService extends BaseService<Order,OrderRepository>{
 				item.setQty(cart.getQty());
 				item.setProductName(cart.getProduct().getName());
 				orderItemRepo.save(item);
-				System.out.println("testinggan");
 			}
 			cartRepository.deleteAllUserCart(member.getId());
 			response.setErrorResponse(false);			
@@ -109,11 +116,12 @@ public class OrderService extends BaseService<Order,OrderRepository>{
 	private int calculateDiscount(int total,Set<ProductDiscount> set,int price){	
 		
 		int discount = price;
+		int tempTracehold = 0;
 		//discount ada ketika tracehold dari discount kurang dari total barang
 		//dan akan di break ketika tracehold > qty karena jelas tidak mungkin m endapatkan diskon 
 		//pada qty itu
 		for( ProductDiscount detailDiscount : set ){
-			if( total >= detailDiscount.getTracehold() ){
+			if( total >= detailDiscount.getTracehold() && tempTracehold < detailDiscount.getTracehold() ){
 				discount = detailDiscount.getDiscount();
 			}else{
 				break;

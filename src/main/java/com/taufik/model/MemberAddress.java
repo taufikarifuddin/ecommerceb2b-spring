@@ -16,10 +16,6 @@ public class MemberAddress {
 	@Column( name = "member_address_id" )
 	int id;
 	
-	@Column( name = "member_stress_address_primary" )
-	@NotNull( message = "Alamat utama tidak boleh kosong" )
-	String addressPrimary;
-	
 	@Column( name = "member_street_address" )
 	String address;
 	
@@ -46,7 +42,6 @@ public class MemberAddress {
 			String postCode, int memberId) {
 		super();
 		this.id = id;
-		this.addressPrimary = addressPrimary;
 		this.address = address;
 		this.city = city;
 		this.province = province;
@@ -62,15 +57,7 @@ public class MemberAddress {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getAddressPrimary() {
-		return addressPrimary;
-	}
-
-	public void setAddressPrimary(String addressPrimary) {
-		this.addressPrimary = addressPrimary;
-	}
-
+	
 	public String getAddress() {
 		return address;
 	}

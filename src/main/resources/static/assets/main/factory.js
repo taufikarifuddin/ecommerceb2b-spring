@@ -6,10 +6,11 @@ app.value('ADMIN_API_PREFIX',"/admin");
 app.value('EVALUATE_DISC',function(total,listDisc,price){	
 	
 	var discount = price;
+	var tempTracehold = 0;
 	for(var i =0; i < listDisc.length; i++){		
-		if( total >= listDisc[i].tracehold ){
+		if( total >= listDisc[i].tracehold && tempTracehold < listDisc[i].tracehold){
 			discount = listDisc[i].discount;
-			console.log(discount);
+			tempTracehold = listDisc[i].tracehold;
 		}else{
 			break;
 		};
